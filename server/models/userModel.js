@@ -13,7 +13,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Password is required']
-    }
+    },
+    likedImaged: [{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    }]
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

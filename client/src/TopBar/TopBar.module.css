@@ -61,3 +61,9 @@
     background: #c5c5c5;
     transform: scale(1.05);
 }
+
+.username{
+    position: absolute;
+    top: 30%;
+    right: 150px;
+}

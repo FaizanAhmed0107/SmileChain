@@ -11,7 +11,6 @@ const getImages = async () => {
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             return {success: true, data: data};
         } else {
             const errorResult = await response.json();

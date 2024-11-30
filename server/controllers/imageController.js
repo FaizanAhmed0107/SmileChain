@@ -8,8 +8,8 @@ const checkImage = asyncHandler(async (req, res) => {
         const {image, time} = req.body;
 
         if (!image || !time) {
-            res.status(400).json({message: "Image and time data is required"});
-            return;
+            res.status(400);
+            throw new Error('All fields are required');
         }
 
         // convert base64 to buffer
@@ -23,8 +23,8 @@ const checkImage = asyncHandler(async (req, res) => {
 
         res.status(201).json({message: "Image processed successfully", data: image.length});
     } catch (error) {
-        console.error("Error processing image:", error);
-        res.status(500).json({message: "Failed to process the image", error: error.message});
+        res.status(500);
+        throw new Error('Failed to process the image');
     }
 });
 
@@ -36,7 +36,8 @@ const getImages = asyncHandler(async (req, res) => {
 
         res.status(200).json(images);
     } catch (error) {
-        res.status(500).json({message: error.message, error: error.message});
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 

@@ -8,7 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {SvgIcon} from "@mui/material";
 
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Login(props) {
@@ -29,6 +29,7 @@ function Login(props) {
             toast.success("Login successful!");
             props.setAccessToken(response.accessToken);
             props.setIsLoggedIn(true);
+            props.setShowLogin(false);
         } else {
             toast.error(response.message || "Login failed!");
         }
@@ -42,6 +43,7 @@ function Login(props) {
             toast.success("Account created successfully! Logging in...");
             props.setAccessToken(response.accessToken);
             props.setIsLoggedIn(true);
+            props.setShowLogin(false);
         } else {
             toast.error(response.message || "Signup failed!");
         }
@@ -103,7 +105,6 @@ function Login(props) {
             <div className={`${styles.login_container} ${props.signUp ? styles.toggle_right : ' '}`}>
                 {current}
             </div>
-            <ToastContainer/>
         </>
     );
 }
@@ -111,7 +112,8 @@ function Login(props) {
 Login.propTypes = {
     signUp: PropTypes.bool.isRequired,
     setIsLoggedIn: PropTypes.func.isRequired,
-    setAccessToken: PropTypes.func.isRequired
+    setAccessToken: PropTypes.func.isRequired,
+    setShowLogin: PropTypes.func.isRequired
 };
 
 export default Login;

@@ -2,8 +2,9 @@ import {useEffect, useState} from "react";
 import io from "socket.io-client";
 import styles from './PhotoFeed.module.css'
 import SmileCard from "../SmileCard/SmileCard.jsx";
-import serverAddress from "../API Requests/serverAddress.js";
-import getImages from "../API Requests/getImages.jsx";
+import serverAddress from "../API_Requests/serverAddress.js";
+import getImages from "../API_Requests/getImages.jsx";
+import {toast} from "react-toastify";
 
 
 const socket = io(serverAddress);
@@ -17,12 +18,14 @@ function PhotoFeed() {
             try {
                 const result = await getImages(); // Await the result
                 if (result.success) {
-                    console.log(result.data);
                     setImages(result.data);
                 } else {
                     console.error(result.message);
                 }
             } catch (error) {
+                toast.error("Error fetching images", {
+                    position: "top-right",
+                });
                 console.error("Error fetching images:", error);
             }
         };

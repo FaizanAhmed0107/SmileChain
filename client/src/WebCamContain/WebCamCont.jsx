@@ -2,7 +2,7 @@ import styles from './WebCamCont.module.css'
 import Webcam from "react-webcam";
 import {useRef} from "react";
 import {toast} from "react-toastify";
-import CheckImage from "../API Requests/CheckImage.jsx";
+import CheckImage from "../API_Requests/CheckImage.jsx";
 import PropTypes from "prop-types";
 
 function WebCamCont(props) {
@@ -16,7 +16,7 @@ function WebCamCont(props) {
     const checkImage = async (img) => {
         const response = await CheckImage(img)
         if (response.success) {
-            console.log(response.data)
+            // console.log(response.data)
         } else {
             console.log(response.message || 'Error Fetching Contacts!')
         }
