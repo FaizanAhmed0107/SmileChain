@@ -1,0 +1,81 @@
+.container {
+    position: relative;
+    width: fit-content;
+    min-width: 320px;
+    background-color: #fffbe7;
+    border: 2px solid #ffdd57;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.image {
+    padding: 10px 10px 0;
+    width: 300px;
+    border-radius: 20px;
+    /*border-bottom: 2px solid #f9c846;*/
+}
+
+.time {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.line {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.likes {
+    padding: 3px;
+    border: #ffcd00 solid 2px;
+    border-radius: 10px;
+}
+
+.likes:active {
+    transform: scale(0.9);
+    background: #ffffff;
+}
+
+.winner, .award {
+    margin: 0;
+    font-size: 1rem;
+    color: #34a0a4;
+    font-weight: bold;
+}
+
+.winner {
+    padding: 5px;
+    background-color: #c8ffd9;
+    border-radius: 10px;
+    margin-top: -5px;
+    margin-bottom: 2px;
+}
+
+.rating {
+    position: absolute;
+    top: 10px;
+    right: 23px;
+    background-color: #34a0a4;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+    transform: scale(0.9);
+    background-color: #0056b3;
+}

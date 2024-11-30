@@ -1,0 +1,63 @@
+.head {
+    width: 100%;
+    background: linear-gradient(90deg, #76c893, #34a0a4);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+.heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.below {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.login, .signup {
+    margin: 5px 0;
+    padding: 0 15px;
+    height: 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    color: #000000;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.login {
+    position: absolute;
+    top: 35%;
+    right: 150px;
+    background: #33f838;
+}
+
+.login:hover {
+    background: #27bf2c;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.signup {
+    position: absolute;
+    top: 35%;
+    right: 50px;
+    background: #ffffff;
+}
+
+.signup:hover {
+    background: #c5c5c5;
+    transform: scale(1.05);
+}

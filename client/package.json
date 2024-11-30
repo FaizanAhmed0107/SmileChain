@@ -1,0 +1,45 @@
+{
+  "name": "smilechain",
+  "private": true,
+  "version": "0.0.0",
+  "homepage": "https://mrunknown101331.github.io/SmileChain",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@fireworks-js/react": "^2.10.8",
+    "@fontsource/roboto": "^5.1.0",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
+    "@mui/styled-engine-sc": "^6.1.9",
+    "buffer": "^6.0.3",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-toastify": "^10.0.6",
+    "react-webcam": "^7.2.0",
+    "socket.io-client": "^4.8.1",
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "gh-pages": "^6.2.0",
+    "globals": "^15.11.0",
+    "vite": "^5.4.10"
+  }
+}

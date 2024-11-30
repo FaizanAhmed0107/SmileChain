@@ -1,0 +1,17 @@
+.container {
+    width: 100%;
+    padding-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.head {
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Poppins', sans-serif;
+    color: #34a0a4;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
