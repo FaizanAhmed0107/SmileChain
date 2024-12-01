@@ -43,6 +43,10 @@
     cursor: pointer;
 }
 
+.likes.liked {
+    background: #abe2f6;
+}
+
 .likes:active {
     transform: scale(0.9);
     background: #ffffff;

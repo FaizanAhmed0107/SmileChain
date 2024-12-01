@@ -1,16 +1,37 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import io from "socket.io-client";
 import styles from './PhotoFeed.module.css'
 import SmileCard from "../SmileCard/SmileCard.jsx";
 import serverAddress from "../API_Requests/serverAddress.js";
 import getImages from "../API_Requests/getImages.jsx";
 import {toast} from "react-toastify";
+import PropTypes from "prop-types";
+import getAbout from "../API_Requests/GetAbout.jsx";
 
 
 const socket = io(serverAddress);
 
-function PhotoFeed() {
+function PhotoFeed(props) {
     const [images, setImages] = useState([]);
+    const [likedImg, setLikedImg] = useState([]);
+    const userId = useRef(null);
+
+    const fetchLikedImages = async () => {
+        try {
+            const result = await getAbout(props.AccessToken); // Await the result
+            if (result.success) {
+                userId.current = result.data.id;
+                setLikedImg(result.data.likedImages);
+            } else {
+                console.error(result.message);
+            }
+        } catch (error) {
+            toast.error("Error fetching liked images", {
+                position: "top-right",
+            });
+            console.error("Error fetching images:", error);
+        }
+    };
 
     // Fetch initial images
     useEffect(() => {
@@ -31,7 +52,8 @@ function PhotoFeed() {
         };
 
         fetchImages();
-    }, []);
+        fetchLikedImages();
+    }, [props.AccessToken]);
 
 
     useEffect(() => {
@@ -44,6 +66,19 @@ function PhotoFeed() {
         };
     }, []);
 
+    useEffect(() => {
+        socket.on("image-like-changed", (data) => {
+            if (props.isLoggedIn) {
+                if (data.userId === userId.current)
+                    fetchLikedImages()
+            }
+        });
+
+        return () => {
+            socket.off("image-like-changed");
+        };
+    }, [fetchLikedImages, props.isLoggedIn]);
+
     return (
         <>
             {images.length > 0 && <p className={styles.head}>Winning Pictures</p>}
@@ -52,10 +87,14 @@ function PhotoFeed() {
                     images.map((image, index) => {
                             return (
                                 <SmileCard
+                                    likedImg={likedImg}
+                                    AccessToken={props.AccessToken}
                                     key={index}
                                     image={image.image}
                                     time={image.time}
                                     rating={image.stars}
+                                    id={image._id}
+                                    likes={image.likes}
                                 />
                             )
                         }
@@ -66,6 +105,10 @@ function PhotoFeed() {
     )
 }
 
+PhotoFeed.propTypes = {
+    AccessToken: PropTypes.string.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
+}
 
 export default PhotoFeed;
 

@@ -28,7 +28,7 @@ function App() {
                     <TopBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setShowLogin={setShowLogin}
                             setSignUp={setSignUp} AccessToken={AccessToken} setAccessToken={setAccessToken}/>
                     <WebCamCont isLoggedIn={isLoggedIn}/>
-                    <PhotoFeed/>
+                    <PhotoFeed AccessToken={AccessToken} isLoggedIn={isLoggedIn}/>
                 </>
             }
 

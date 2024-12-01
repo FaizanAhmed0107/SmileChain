@@ -62,7 +62,26 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route GET /api/users/current
 // @access private
 const currentUser = asyncHandler(async (req, res) => {
-    res.json(req.user);
+    try {
+        // Populate the likedImages field to fetch details of liked images
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
+
+        res.json({
+            id: req.user.id,
+            username: req.user.username,
+            email: req.user.email,
+            likedImages: user.likedImages,
+        });
+    } catch (error) {
+        res.status(500);
+        throw new Error(error.message || "Failed to fetch user data");
+    }
 });
+
 
 module.exports = {registerUser, loginUser, currentUser};

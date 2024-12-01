@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Password is required']
     },
-    likedImaged: [{
+    likedImages: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
