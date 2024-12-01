@@ -17,6 +17,16 @@ function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
+        return passwordRegex.test(password);
+    };
+
     const togglePassVisible = () => {
         setIsPassVisible((current) => !current);
     };
@@ -37,15 +47,21 @@ function Login(props) {
 
     const handleRegisterSubmit = async (event) => {
         event.preventDefault();
-        const response = await HandleSignup(username, email, password);
-
-        if (response.success) {
-            toast.success("Account created successfully! Logging in...");
-            props.setAccessToken(response.accessToken);
-            props.setIsLoggedIn(true);
-            props.setShowLogin(false);
+        if (!validateEmail(email)) {
+            toast.error('Email is not valid. Please enter a valid email address.');
+        } else if (!validatePassword(password)) {
+            toast.error('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.');
         } else {
-            toast.error(response.message || "Signup failed!");
+            const response = await HandleSignup(username, email, password);
+
+            if (response.success) {
+                toast.success("Account created successfully! Logging in...");
+                props.setAccessToken(response.accessToken);
+                props.setIsLoggedIn(true);
+                props.setShowLogin(false);
+            } else {
+                toast.error(response.message || "Signup failed!");
+            }
         }
     };
 
