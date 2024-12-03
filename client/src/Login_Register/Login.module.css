@@ -69,8 +69,8 @@
     cursor: pointer;
 }
 
-.button {
-    background-color: #512da8;
+.subutton, .lgbutton {
+    background-color: #34a0a4;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -81,4 +81,12 @@
     text-transform: uppercase;
     margin-top: 10px;
     cursor: pointer;
+}
+
+.lgbutton {
+    background-color: #76c893;
+}
+
+.subutton {
+    background-color: #34a0a4;
 }

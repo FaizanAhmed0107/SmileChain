@@ -81,7 +81,7 @@ function Login(props) {
                              component={isPassVisible ? VisibilityOffIcon : VisibilityIcon}
                              onClick={togglePassVisible}/>
                 </div>
-                <button type="submit" className={styles.button}>Log in</button>
+                <button type="submit" className={styles.lgbutton}>Log in</button>
             </form>
         </>
     );
@@ -104,7 +104,7 @@ function Login(props) {
                              component={isPassVisible ? VisibilityOffIcon : VisibilityIcon}
                              onClick={togglePassVisible}/>
                 </div>
-                <button type="submit" className={styles.button}>Sign up</button>
+                <button type="submit" className={styles.subutton}>Sign up</button>
             </form>
         </>
     );
