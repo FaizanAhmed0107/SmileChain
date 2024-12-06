@@ -10,6 +10,5 @@ const {
 const {currentUser} = require("../controllers/userController");
 
 router.route('/').post(checkImage).get(getImages);
-router.get('/:id', validateToken, likeImage);
 
 module.exports = router;

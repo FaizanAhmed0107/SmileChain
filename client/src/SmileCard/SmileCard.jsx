@@ -1,19 +1,19 @@
 import {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
-import HandleLikeImage from "../API_Requests/HandleLikeImage.jsx";
-import styles from './SmileCard.module.css';
 import io from "socket.io-client";
 import serverAddress from "../API_Requests/serverAddress.js";
 import {toast} from "react-toastify";
+import styles from './SmileCard.module.css';
 
+// Connect to WebSocket server
 const socket = io(serverAddress);
 
 function SmileCard(props) {
     const [likes, setLikes] = useState(props.likes);
 
-    const likePic = async () => {
+    const likePic = () => {
         if (props.isLoggedIn) {
-            // Optimistically update likes
+            // Optimistic update for UI
             const wasLiked = props.likedImg.includes(props.id);
             setLikes((prevLikes) => (wasLiked ? prevLikes - 1 : prevLikes + 1));
             if (wasLiked) {
@@ -22,16 +22,20 @@ function SmileCard(props) {
                 props.updateLikedImg((prevLiked) => [...prevLiked, props.id]);
             }
 
-            // Send like request to server
-            const response = await HandleLikeImage(props.id, props.AccessToken);
-            if (!response.success) {
-                console.error(response.message);
-                // Revert the optimistic update if there's an error
-                setLikes((prevLikes) => (wasLiked ? prevLikes + 1 : prevLikes - 1));
-                props.updateLikedImg((prevLiked) =>
-                    wasLiked ? [...prevLiked, props.id] : prevLiked.filter((id) => id !== props.id)
-                );
-            }
+            // WebSocket request to like the image
+            socket.emit("likeImage", {
+                imageId: props.id,
+                AccessToken: props.AccessToken
+            }, (response) => {
+                if (!response.success) {
+                    console.error(response.message);
+                    // Revert optimistic update if there's an error
+                    setLikes((prevLikes) => (wasLiked ? prevLikes + 1 : prevLikes - 1));
+                    props.updateLikedImg((prevLiked) =>
+                        wasLiked ? [...prevLiked, props.id] : prevLiked.filter((id) => id !== props.id)
+                    );
+                }
+            });
         } else {
             toast.error("Please log in to like.", {
                 position: "top-right",

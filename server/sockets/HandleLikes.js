@@ -1,8 +1,12 @@
 const Image = require("../models/imageModel"); // Adjust path based on your project structure
 const User = require("../models/userModel"); // Adjust path based on your project structure
+const jwt = require("jsonwebtoken");
 
-const handleImageLike = async ({ imageId, userId }, io, callback) => {
+const handleImageLike = async ({imageId, AccessToken}, io, callback) => {
     try {
+        const decoded = jwt.verify(AccessToken, process.env.ACCESS_TOKEN_SECRET);
+        const userId = decoded.user.id;
+
         const image = await Image.findById(imageId);
         const user = await User.findById(userId);
 
@@ -63,4 +67,4 @@ const handleImageLike = async ({ imageId, userId }, io, callback) => {
     }
 };
 
-module.exports = { handleImageLike };
+module.exports = handleImageLike;

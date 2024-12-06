@@ -5,6 +5,7 @@ const connectDB = require('./config/dbConnection');
 const errorHandler = require("./middleware/errorHandler");
 const cors = require('cors');
 const compression = require('compression');
+const handleImageLike = require("./sockets/HandleLikes");
 const dotenv = require('dotenv').config();
 
 connectDB();
@@ -13,7 +14,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173", // Allow requests from any origin;
+        origin: "http://localhost:5173",
         methods: ["GET", "POST"],
     },
 });
@@ -30,6 +31,15 @@ app.use(errorHandler);
 io.on('connection', (socket) => {
     console.log('A client connected:', socket.id);
 
+    socket.on('likeImage', async (data, callback) => {
+        try {
+            await handleImageLike(data, io, callback);
+        } catch (error) {
+            console.error(`Error in likeImage event: ${error.message}`);
+            if (callback) callback({success: false, message: "Internal Server Error"});
+        }
+    });
+
     socket.on('disconnect', () => {
         console.log('A client disconnected:', socket.id);
     });
@@ -37,6 +47,7 @@ io.on('connection', (socket) => {
     socket.on('error', (err) => {
         console.error(`Socket error: ${err}`);
     });
+
     socket.on('ping', () => socket.emit('pong'));
 });
 
@@ -44,4 +55,4 @@ app.set('io', io);
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-})
+});
