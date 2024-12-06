@@ -4,6 +4,7 @@ const {Server} = require('socket.io'); // Import Socket.IO
 const connectDB = require('./config/dbConnection');
 const errorHandler = require("./middleware/errorHandler");
 const cors = require('cors');
+const compression = require('compression');
 const dotenv = require('dotenv').config();
 
 connectDB();
@@ -12,13 +13,14 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "*", // Allow requests from any origin;
+        origin: "http://localhost:5173", // Allow requests from any origin;
         methods: ["GET", "POST"],
     },
 });
 
 const PORT = process.env.PORT || 5000;
 
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use('/api/image', require('./routes/imageRoute'));
@@ -31,6 +33,11 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('A client disconnected:', socket.id);
     });
+
+    socket.on('error', (err) => {
+        console.error(`Socket error: ${err}`);
+    });
+    socket.on('ping', () => socket.emit('pong'));
 });
 
 app.set('io', io);
