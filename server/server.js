@@ -10,50 +10,31 @@ connectDB();
 const app = express();
 const server = http.createServer(app);
 
-// CORS configuration
-const corsOptions = {
-    origin: ["https://smile-chain.vercel.app", "http://localhost:5173"],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-    credentials: true, // Allow credentials (cookies, etc.)
-};
-
-// Apply CORS middleware
-app.use(cors(corsOptions));
-app.use(express.json());
-
-// Import and use routes
-app.use('/api/image', require('./routes/imageRoute'));
-app.use('/api/users', require('./routes/userRoutes'));
-
-// Custom error handler middleware
-app.use(errorHandler);
-
-// Socket.IO setup with CORS configuration
 const io = new Server(server, {
     cors: {
-        origin: ["https://smile-chain.vercel.app", "http://localhost:5173"],
+        origin: "*", // Allow requests from any origin;
         methods: ["GET", "POST"],
     },
 });
 
-// Handle Socket.IO connections
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+app.use('/api/image', require('./routes/imageRoute'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use(errorHandler);
+
 io.on('connection', (socket) => {
     console.log('A client connected:', socket.id);
 
-    // Handle client disconnection
     socket.on('disconnect', () => {
         console.log('A client disconnected:', socket.id);
     });
 });
 
-// Attach io instance to the app
 app.set('io', io);
 
-// Define the port
-const PORT = process.env.PORT || 5000;
-
-// Start the server
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
+})
