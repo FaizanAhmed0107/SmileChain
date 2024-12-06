@@ -13,7 +13,9 @@ const server = http.createServer(app);
 // CORS configuration
 const corsOptions = {
     origin: ["https://smile-chain.vercel.app", "http://localhost:5173"],
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    credentials: true, // Allow credentials (cookies, etc.)
 };
 
 // Apply CORS middleware
