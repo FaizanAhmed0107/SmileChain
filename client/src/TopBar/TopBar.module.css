@@ -23,7 +23,8 @@
     margin: 0;
 }
 
-.login, .signup {
+.login, .logout, .centeredButton {
+    width: fit-content;
     margin: 5px 0;
     padding: 0 15px;
     height: 30px;
@@ -36,11 +37,10 @@
     transition: all 0.3s ease-in-out;
 }
 
-
 .login {
     position: absolute;
     top: 35%;
-    right: 150px;
+    right: 5%;
     background: #33f838;
 }
 
@@ -50,20 +50,40 @@
     transform: scale(1.05);
 }
 
-.signup {
+.username {
     position: absolute;
-    top: 35%;
-    right: 50px;
+    top: 30%;
+    right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.logout {
     background: #ffffff;
 }
 
-.signup:hover {
-    background: #c5c5c5;
+.logout:hover {
+    background: #e8e8e8;
     transform: scale(1.05);
 }
 
-.username{
-    position: absolute;
-    top: 30%;
-    right: 150px;
+.centeredContainer {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.centeredButton {
+    margin-top: 15px;
+    background: #33f838;
+}
+
+.centeredButton:hover {
+    background: #27bf2c;
+    color: #ffffff;
+    transform: scale(1.05);
 }

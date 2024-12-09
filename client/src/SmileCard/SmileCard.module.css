@@ -41,14 +41,19 @@
     border: #ffcd00 solid 2px;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .likes.liked {
     background: #abe2f6;
 }
 
+.likes:hover {
+    transform: scale(1.15);
+}
+
 .likes:active {
-    transform: scale(0.9);
+    transform: scale(0.85);
     background: #ffffff;
 }
 

@@ -12,15 +12,15 @@ function TopBar(props) {
             try {
                 const result = await getAbout(props.AccessToken);
                 if (result.success) {
-                    setUser(result.data.username)
+                    setUser(result.data.username);
                 } else {
                     console.error(result.message);
                 }
             } catch (error) {
-                toast.error("Error fetching images", {
+                toast.error("Error fetching user details", {
                     position: "top-right",
                 });
-                console.error("Error fetching images:", error);
+                console.error("Error fetching user details:", error);
             }
         };
 
@@ -32,33 +32,28 @@ function TopBar(props) {
 
     const displayLogin = () => {
         props.setShowLogin(true);
-        props.setSignUp(false);
-    }
-
-    const displaySignup = () => {
-        props.setShowLogin(true);
-        props.setSignUp(true);
-    }
+    };
 
     const Logout = () => {
         props.setIsLoggedIn(false);
         props.setShowLogin(false);
         props.setAccessToken("");
-    }
+    };
 
     const login = (
         <div>
-            <button className={styles.login} onClick={displayLogin}>Log in</button>
-            <button className={styles.signup} onClick={displaySignup}>Sign Up</button>
+            <button className={props.isSmall ? styles.centeredButton : styles.login} onClick={displayLogin}>Log in /
+                Sign up
+            </button>
         </div>
-    )
+    );
 
     const loggedIn = (
-        <div>
-            <p className={styles.username}>Welcome, {user}</p>
-            <button className={styles.signup} onClick={Logout}>Log out</button>
+        <div className={props.isSmall ? styles.centeredContainer : styles.username}>
+            <p>Welcome, {user}</p>
+            <button className={styles.logout} onClick={Logout}>Log out</button>
         </div>
-    )
+    );
 
     return (
         <header className={styles.head}>
@@ -68,14 +63,15 @@ function TopBar(props) {
             </div>
             {props.isLoggedIn ? loggedIn : login}
         </header>
-    )
+    );
 }
+
 
 TopBar.propTypes = {
     AccessToken: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     setShowLogin: PropTypes.func.isRequired,
-    setSignUp: PropTypes.func.isRequired,
+    isSmall: PropTypes.bool.isRequired,
     setAccessToken: PropTypes.func.isRequired,
     setIsLoggedIn: PropTypes.func.isRequired,
 }
