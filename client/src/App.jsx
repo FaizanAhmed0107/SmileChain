@@ -13,7 +13,7 @@ function App() {
     const [isSmall, setIsSmall] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [AccessToken, setAccessToken] = useState("");
-    const [showLogin, setShowLogin] = useState(true);
+    const [showLogin, setShowLogin] = useState(false);
 
     return (
         <>
