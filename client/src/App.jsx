@@ -13,13 +13,13 @@ function App() {
     const [isSmall, setIsSmall] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [AccessToken, setAccessToken] = useState("");
-    const [showLogin, setShowLogin] = useState(false);
+    const [showLogin, setShowLogin] = useState(true);
 
     return (
         <>
             {showLogin ?
                 <RegisterLogin setIsLoggedIn={setIsLoggedIn} setAccessToken={setAccessToken}
-                               setShowLogin={setShowLogin}/>
+                               setShowLogin={setShowLogin} isSmall={isSmall}/>
                 : <>
                     <TopBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setShowLogin={setShowLogin}
                             AccessToken={AccessToken} setAccessToken={setAccessToken} isSmall={isSmall}/>
