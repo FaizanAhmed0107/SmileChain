@@ -15,3 +15,8 @@
     text-decoration: underline;
     margin-bottom: 5px;
 }
+
+.loading {
+    width: 100%;
+    text-align: center;
+}

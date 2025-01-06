@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState, useCallback} from "react";
 import {toast} from "react-toastify";
 import PropTypes from "prop-types";
+import {BallTriangle} from 'react-loading-icons'
 import styles from "./PhotoFeed.module.css";
 import SmileCard from "../SmileCard/SmileCard.jsx";
 import getImages from "../API_Requests/getImages.jsx";
@@ -84,31 +85,30 @@ function PhotoFeed(props) {
 
     return (
         <>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : images.length > 0 ? (
-                <>
-                    <p className={styles.head}>Winning Pictures</p>
-                    <div className={styles.container}>
-                        {images.map((image, index) => (
-                            <SmileCard
-                                key={index}
-                                likedImg={likedImg}
-                                updateLikedImg={setLikedImg}
-                                AccessToken={props.AccessToken}
-                                image={image.image}
-                                time={image.time}
-                                rating={image.stars}
-                                id={image._id}
-                                likes={image.likes}
-                                isLoggedIn={props.isLoggedIn}
-                            />
-                        ))}
-                    </div>
-                </>
-            ) : (
-                <p>No images found.</p>
-            )}
+            {isLoading ?
+                <BallTriangle className={styles.loading} fill={"#34a0a4"} speed={.75}/>
+                : images.length > 0 ?
+                    <>
+                        <p className={styles.head}>Winning Pictures</p>
+                        <div className={styles.container}>
+                            {images.map((image, index) => (
+                                <SmileCard
+                                    key={index}
+                                    likedImg={likedImg}
+                                    updateLikedImg={setLikedImg}
+                                    AccessToken={props.AccessToken}
+                                    image={image.image}
+                                    time={image.time}
+                                    rating={image.stars}
+                                    id={image._id}
+                                    likes={image.likes}
+                                    isLoggedIn={props.isLoggedIn}
+                                />
+                            ))}
+                        </div>
+                    </>
+                    : <></>
+            }
         </>
     );
 }
