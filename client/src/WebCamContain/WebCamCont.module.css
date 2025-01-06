@@ -39,3 +39,12 @@
     background: #05668d;
     transform: scale(0.9);
 }
+
+.captureBtn:disabled, .captureBtn[disabled] {
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.captureBtn[disabled]:hover {
+    transform: scale(1);
+}

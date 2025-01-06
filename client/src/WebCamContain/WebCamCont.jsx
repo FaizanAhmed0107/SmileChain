@@ -1,12 +1,13 @@
 import styles from './WebCamCont.module.css'
 import Webcam from "react-webcam";
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {toast} from "react-toastify";
 import CheckImage from "../API_Requests/CheckImage.jsx";
 import PropTypes from "prop-types";
 import {detectFaces} from "../util/smileDetection.js";
 
 function WebCamCont(props) {
+    const [buttonActive, setButtonActive] = useState(true);
     const webcamRef = useRef(null);
     const videoConstraints = {
         width: 720,
@@ -38,6 +39,7 @@ function WebCamCont(props) {
             }
 
             const img = webcamRef.current.getScreenshot();
+            setButtonActive(false);
             if (!img) {
                 throw new Error("Failed to capture a screenshot.");
             }
@@ -52,7 +54,6 @@ function WebCamCont(props) {
                 toast.warning("No Face Detected.", {
                     position: "top-right",
                 });
-
             else if (faceConfidence > 0.6) {
                 toast.success("Congratulations for Smiling.", {
                     position: "top-right",
@@ -68,6 +69,8 @@ function WebCamCont(props) {
             toast.error(`Error: ${error.message}`, {
                 position: "top-right",
             });
+        } finally {
+            setButtonActive(true);
         }
     };
 
@@ -82,7 +85,7 @@ function WebCamCont(props) {
                     className={styles.CamCont}
                     mirrored={true}
                 />
-                <button onClick={capture} className={styles.captureBtn}>Capture photo</button>
+                <button onClick={capture} className={styles.captureBtn} disabled={!buttonActive}>Capture photo</button>
             </div>
         </>
     )
