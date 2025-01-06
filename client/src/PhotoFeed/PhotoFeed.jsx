@@ -1,22 +1,19 @@
-import {useEffect, useRef, useState} from "react";
-import io from "socket.io-client";
-import styles from './PhotoFeed.module.css';
-import SmileCard from "../SmileCard/SmileCard.jsx";
-import serverAddress from "../API_Requests/serverAddress.js";
-import getImages from "../API_Requests/getImages.jsx";
+import {useEffect, useRef, useState, useCallback} from "react";
 import {toast} from "react-toastify";
 import PropTypes from "prop-types";
+import styles from "./PhotoFeed.module.css";
+import SmileCard from "../SmileCard/SmileCard.jsx";
+import getImages from "../API_Requests/getImages.jsx";
 import getAbout from "../API_Requests/GetAbout.jsx";
-
-const socket = io(serverAddress);
+import socket from "../API_Requests/socket.js";
 
 function PhotoFeed(props) {
     const [images, setImages] = useState([]);
     const [likedImg, setLikedImg] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const userId = useRef(null);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const fetchLikedImages = async () => {
+    const fetchLikedImages = useCallback(async () => {
         if (props.isLoggedIn) {
             try {
                 const result = await getAbout(props.AccessToken);
@@ -27,16 +24,15 @@ function PhotoFeed(props) {
                     console.error(result.message);
                 }
             } catch (error) {
-                toast.error("Error fetching liked images", {
-                    position: "top-right",
-                });
-                console.error("Error fetching images:", error);
+                toast.error("Error fetching liked images", {position: "top-right"});
+                console.error("Error fetching liked images:", error);
             }
         }
-    };
+    }, [props.AccessToken, props.isLoggedIn]);
 
     useEffect(() => {
         const fetchImages = async () => {
+            setIsLoading(true);
             try {
                 const result = await getImages();
                 if (result.success) {
@@ -45,65 +41,74 @@ function PhotoFeed(props) {
                     console.error(result.message);
                 }
             } catch (error) {
-                toast.error("Error fetching images", {
-                    position: "top-right",
-                });
+                toast.error("Error fetching images", {position: "top-right"});
                 console.error("Error fetching images:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchImages();
         fetchLikedImages();
-    }, [fetchLikedImages, props.AccessToken]);
+    }, [fetchLikedImages]);
 
-    // Listen for new image socket events
     useEffect(() => {
-        socket.on("new-image", (newImage) => {
+        const handleNewImage = (newImage) => {
             setImages((prevImages) => [...prevImages, newImage]);
-        });
+        };
+
+        socket.on("new-image", handleNewImage);
 
         return () => {
-            socket.off("new-image");
+            socket.off("new-image", handleNewImage);
         };
     }, []);
 
-    // Listen for like change socket events
     useEffect(() => {
-        socket.on("image-like-changed", (data) => {
+        const handleLikeChange = (data) => {
             if (props.isLoggedIn && data.userId === userId.current) {
-                fetchLikedImages();  // Refresh the liked images
+                fetchLikedImages();
             }
-        });
+        };
+
+        socket.on("image-like-changed", handleLikeChange);
 
         return () => {
-            socket.off("image-like-changed");
+            socket.off("image-like-changed", handleLikeChange);
         };
     }, [fetchLikedImages, props.isLoggedIn]);
 
     useEffect(() => {
-        if (!props.isLoggedIn)
-            setLikedImg([]);
+        if (!props.isLoggedIn) setLikedImg([]);
     }, [props.isLoggedIn]);
 
     return (
         <>
-            {images.length > 0 && <p className={styles.head}>Winning Pictures</p>}
-            <div className={styles.container}>
-                {images.map((image, index) => (
-                    <SmileCard
-                        key={index}
-                        likedImg={likedImg}
-                        updateLikedImg={setLikedImg}
-                        AccessToken={props.AccessToken}
-                        image={image.image}
-                        time={image.time}
-                        rating={image.stars}
-                        id={image._id}
-                        likes={image.likes}
-                        isLoggedIn={props.isLoggedIn}
-                    />
-                ))}
-            </div>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : images.length > 0 ? (
+                <>
+                    <p className={styles.head}>Winning Pictures</p>
+                    <div className={styles.container}>
+                        {images.map((image, index) => (
+                            <SmileCard
+                                key={index}
+                                likedImg={likedImg}
+                                updateLikedImg={setLikedImg}
+                                AccessToken={props.AccessToken}
+                                image={image.image}
+                                time={image.time}
+                                rating={image.stars}
+                                id={image._id}
+                                likes={image.likes}
+                                isLoggedIn={props.isLoggedIn}
+                            />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <p>No images found.</p>
+            )}
         </>
     );
 }
