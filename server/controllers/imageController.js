@@ -6,18 +6,14 @@ const checkImage = asyncHandler(async (req, res) => {
     try {
         console.log("Received Request Body:", req.body);
 
-        const {image, time} = req.body;
+        const {image, time, stars} = req.body;
 
-        if (!image || !time) {
+        if (!image || !time || !stars) {
             res.status(400);
             throw new Error('All fields are required');
         }
 
-        // convert base64 to buffer
-        // const base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
-        // const imageBuffer = Buffer.from(base64Data, "base64");
-
-        const imgResponse = await Image.create({image, time, likes: 0, stars: 3});
+        const imgResponse = await Image.create({image, time, likes: 0, stars});
 
         const io = req.app.get('io');
         io.emit('new-image', imgResponse);

@@ -7,21 +7,6 @@ import PhotoFeed from "./PhotoFeed/PhotoFeed.jsx";
 import RegisterLogin from "./Login_Register/RegisterLogin.jsx";
 import DeviceDetector from "./DeviceDetector.jsx";
 
-import {
-    Audio,
-    Bars,
-    BallTriangle,
-    Grid,
-    Puff,
-    Oval,
-    Rings,
-    Circles,
-    Hearts,
-    SpinningCircles,
-    TailSpin,
-    ThreeDots
-} from 'react-loading-icons';
-
 function App() {
     // Initialize state with values from sessionStorage (if they exist)
     const [isSmall, setIsSmall] = useState(false);
