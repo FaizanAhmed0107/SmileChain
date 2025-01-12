@@ -93,22 +93,6 @@ positivity.
 
 ---
 
-## 📷 Screenshots
-
-### **Smile Detection**
-
-*Real-time smile detection in action.*
-
-### **Reward Confirmation**
-
-*Ether reward confirmation message.*
-
-### **Interactive Gallery**
-
-*Gallery showcasing smiles and allowing likes from logged-in users.*
-
----
-
 ## 🛡️ Smart Contract
 
 The Ethereum smart contract handles:
@@ -149,4 +133,5 @@ Contributions are welcome! To contribute:
 ## 📬 Contact
 
 For queries or collaboration opportunities, feel free to reach out:
+
 - **Email**: [faizanahmed0107@gmail.com](mailto:faizanahmed0107@gmail.com)
