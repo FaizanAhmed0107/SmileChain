@@ -42,7 +42,7 @@ function App() {
                         setAccessToken={setAccessToken}
                         isSmall={isSmall}
                     />
-                    <WebCamCont isLoggedIn={isLoggedIn} AccessToken={AccessToken} threshold={0}/>
+                    <WebCamCont isLoggedIn={isLoggedIn} AccessToken={AccessToken} threshold={0.6}/>
                     <PhotoFeed AccessToken={AccessToken} isLoggedIn={isLoggedIn}/>
                 </>
             }
