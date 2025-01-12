@@ -19,7 +19,7 @@
 
 .fullCard {
     width: 768px;
-    min-height: 480px;
+    min-height: 530px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

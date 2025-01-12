@@ -33,11 +33,12 @@ function getBalance(sender, callback) {
         callback(balance.toString()); // Balance is converted to a string for compatibility
     }).catch((e) => {
         console.log(e);
-        callback("ERROR 404");
+        res.status(404);
+        throw new Error('Failed to get Balance');
     });
 }
 
-function sendEther(sender, receiver, callback) {
+function sendEther(sender, receiver) {
     const self = this;
     EtherSend.setProvider(self.web3.currentProvider);
     let data;
@@ -45,16 +46,17 @@ function sendEther(sender, receiver, callback) {
         data = instance;
         await instance.sendEther(
             receiver,
-            Web3.utils.toWei("1", "ether"),
+            Web3.utils.toWei("0.01", "ether"),
             {
                 from: sender,
-                value: Web3.utils.toWei("1", "ether"), // Sending Ether
+                value: Web3.utils.toWei("0.01", "ether"), // Sending Ether
                 gas: 3000000,
             }
         );
     }).catch((e) => {
         console.log(e);
-        callback("ERROR 404");
+        res.status(404);
+        throw new Error('Failed to send Ether');
     });
 }
 

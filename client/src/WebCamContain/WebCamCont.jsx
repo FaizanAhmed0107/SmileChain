@@ -16,7 +16,7 @@ function WebCamCont(props) {
     };
 
     const checkImage = async (img, confidence) => {
-        const response = await CheckImage(img, Math.round(confidence * 5))
+        const response = await CheckImage(img, Math.round(confidence * 5), props.AccessToken)
         if (response.success) {
             // console.log(response.data)
         } else {
@@ -54,7 +54,7 @@ function WebCamCont(props) {
                 toast.warning("No Face Detected.", {
                     position: "top-right",
                 });
-            else if (faceConfidence > 0.6) {
+            else if (faceConfidence > props.threshold) {
                 toast.success("Congratulations for Smiling.", {
                     position: "top-right",
                 });
@@ -93,6 +93,8 @@ function WebCamCont(props) {
 
 WebCamCont.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
+    AccessToken: PropTypes.string.isRequired,
+    threshold: PropTypes.number.isRequired
 }
 
 export default WebCamCont;

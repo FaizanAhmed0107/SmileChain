@@ -1,8 +1,8 @@
 import HandleLogin from "./HandleLogin.jsx";
 import serverAddress from "./serverAddress.js";
 
-const HandleSignup = async (username, email, password) => {
-    const data = {username, email, password};
+const HandleSignup = async (username, email, password, account) => {
+    const data = {username, email, password, account};
 
     try {
         const response = await fetch(serverAddress + '/api/users/register', {

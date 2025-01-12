@@ -7,8 +7,9 @@ const User = require("../models/userModel");
 // @route POST /api/users/register
 // @access public
 const registerUser = asyncHandler(async (req, res) => {
-    const {username, email, password} = req.body;
-    if (!username || !email || !password) {
+    const {username, email, password, account} = req.body;
+    if (!username || !email || !password || !account) {
+        console.log(username, email, password, account)
         res.status(400);
         throw new Error('All fields are required');
     }
@@ -20,7 +21,7 @@ const registerUser = asyncHandler(async (req, res) => {
     //Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({username, email, password: hashedPassword});
+    const user = await User.create({username, email, password: hashedPassword, account});
     console.log('User Created');
     if (user) {
         res.status(201).json({_id: user.id, email: user.email});

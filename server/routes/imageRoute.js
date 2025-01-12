@@ -5,10 +5,10 @@ const router = express.Router();
 const {
     checkImage,
     getImages,
-    likeImage
 } = require('../controllers/imageController');
-const {currentUser} = require("../controllers/userController");
+const {currentUser, registerUser, loginUser} = require("../controllers/userController");
 
-router.route('/').post(checkImage).get(getImages);
+router.get('/', getImages);
+router.post('/', validateToken, checkImage);
 
 module.exports = router;

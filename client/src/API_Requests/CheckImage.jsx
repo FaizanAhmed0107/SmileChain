@@ -1,6 +1,6 @@
 import serverAddress from "./serverAddress.js";
 
-const CheckImage = async (img, stars) => {
+const CheckImage = async (img, stars, accessToken) => {
     try {
         const date = new Date();
         const today = (date.getHours() % 12 === 0) ? 12 : date.getHours() % 12;
@@ -9,6 +9,7 @@ const CheckImage = async (img, stars) => {
         const response = await fetch(serverAddress + '/api/image', {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({image: img, time, stars}),

@@ -16,6 +16,8 @@ function Login(props) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confPassword, setConfPassword] = useState("");
+    const [account, setAccount] = useState("");
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,8 +53,10 @@ function Login(props) {
             toast.error('Email is not valid. Please enter a valid email address.');
         } else if (!validatePassword(password)) {
             toast.error('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.');
+        } else if (password !== confPassword) {
+            toast.error('Confirm Password does not Match password.')
         } else {
-            const response = await HandleSignup(username, email, password);
+            const response = await HandleSignup(username, email, password, account);
 
             if (response.success) {
                 toast.success("Account created successfully! Logging in...");
@@ -96,10 +100,20 @@ function Login(props) {
                        onChange={(e) => setUsername(e.target.value)}/>
                 <input type="text" className={styles.userInput} name="email" placeholder="Email" required
                        onChange={(e) => setEmail(e.target.value)}/>
+                <input type="text" className={styles.userInput} name="account" placeholder="Etherium Account" required
+                       onChange={(e) => setAccount(e.target.value)}/>
                 <div className={styles.passBox}>
                     <input type={isPassVisible ? 'text' : 'password'} className={styles.passField} name="password"
                            placeholder="Password" required
                            onChange={(e) => setPassword(e.target.value)}/>
+                    <SvgIcon className={styles.visibleIcon}
+                             component={isPassVisible ? VisibilityOffIcon : VisibilityIcon}
+                             onClick={togglePassVisible}/>
+                </div>
+                <div className={styles.passBox}>
+                    <input type={isPassVisible ? 'text' : 'password'} className={styles.passField} name="confpassword"
+                           placeholder="Confirm Password" required
+                           onChange={(e) => setConfPassword(e.target.value)}/>
                     <SvgIcon className={styles.visibleIcon}
                              component={isPassVisible ? VisibilityOffIcon : VisibilityIcon}
                              onClick={togglePassVisible}/>

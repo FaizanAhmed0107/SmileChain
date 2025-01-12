@@ -38,21 +38,6 @@ app.use(cors({
 app.use(express.json());
 app.use('/api/image', require('./routes/imageRoute'));
 app.use('/api/users', require('./routes/userRoutes'));
-// app.use('/api/web3', require('./routes/etherRoutes'));
-app.get('/getBalance', (req, res) => {
-    truffle_connect.getOwner(function (accounts) {
-        res.send(accounts);
-
-        console.log("**** GET /getBalance ****");
-
-        truffle_connect.sendEther(accounts[0], accounts[1], (answer) => {
-            console.log(answer);
-        })
-        // truffle_connect.getBalance(accounts[0], (balance) => {
-        //     console.log("Balance:", balance);
-        // })
-    })
-});
 app.use(errorHandler);
 
 io.on('connection', (socket) => {

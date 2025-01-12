@@ -14,10 +14,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Password is required']
     },
+    account: {
+        type: String,
+        required: [true, 'Account is required']
+    },
     likedImages: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'Image'
     }]
 }, {timestamps: true});
 
