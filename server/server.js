@@ -7,6 +7,8 @@ const cors = require('cors');
 const compression = require('compression');
 const handleImageLike = require("./sockets/HandleLikes");
 const dotenv = require('dotenv').config();
+const Web3 = require('web3');
+const truffle_connect = require('./truffle/Contract.js');
 
 connectDB();
 const app = express();
@@ -36,6 +38,18 @@ app.use(cors({
 app.use(express.json());
 app.use('/api/image', require('./routes/imageRoute'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.get('/getBalance', (req, res) => {
+    truffle_connect.start(function (answer) {
+        res.send(answer);
+
+        console.log("**** GET /getBalance ****");
+        console.log(req.body);
+
+        truffle_connect.getBalance(answer, (balance) => {
+            console.log("Balance:", balance);
+        })
+    })
+});
 app.use(errorHandler);
 
 io.on('connection', (socket) => {
@@ -64,5 +78,6 @@ io.on('connection', (socket) => {
 app.set('io', io);
 
 server.listen(PORT, () => {
+    truffle_connect.web3 = new Web3("http://127.0.0.1:7545");
     console.log(`Server is running on port ${PORT}`);
 });
