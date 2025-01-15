@@ -1,4 +1,4 @@
-import styles from './WebCamCont.module.css'
+import styles from './WebCamCont.module.css';
 import Webcam from "react-webcam";
 import {useRef, useState} from "react";
 import {toast} from "react-toastify";
@@ -8,6 +8,8 @@ import {detectFaces} from "../util/smileDetection.js";
 
 function WebCamCont(props) {
     const [buttonActive, setButtonActive] = useState(true);
+    const [isCameraActive, setIsCameraActive] = useState(true);
+    const [capturedImage, setCapturedImage] = useState(null);
     const webcamRef = useRef(null);
     const videoConstraints = {
         width: 720,
@@ -16,13 +18,13 @@ function WebCamCont(props) {
     };
 
     const checkImage = async (img, confidence) => {
-        const response = await CheckImage(img, Math.round(confidence * 5), props.AccessToken)
+        const response = await CheckImage(img, Math.round(confidence * 5), props.AccessToken);
         if (response.success) {
             // console.log(response.data)
         } else {
-            console.log(response.message || 'Error Fetching Contacts!')
+            console.log(response.message || "Error Fetching Contacts!");
         }
-    }
+    };
 
     const capture = async () => {
         if (!props.isLoggedIn) {
@@ -39,7 +41,10 @@ function WebCamCont(props) {
             }
 
             const img = webcamRef.current.getScreenshot();
+            setCapturedImage(img); // Save the captured image to freeze the display
             setButtonActive(false);
+            setIsCameraActive(false); // Pause the webcam feed
+
             if (!img) {
                 throw new Error("Failed to capture a screenshot.");
             }
@@ -71,24 +76,29 @@ function WebCamCont(props) {
             });
         } finally {
             setButtonActive(true);
+            setIsCameraActive(true); // Resume the webcam feed
         }
     };
 
     return (
         <>
             <div className={styles.box}>
-                <Webcam
-                    audio={false}
-                    ref={webcamRef}
-                    screenshotFormat="image/jpeg"
-                    videoConstraints={videoConstraints}
-                    className={styles.CamCont}
-                    mirrored={true}
-                />
+                {isCameraActive ? (
+                    <Webcam
+                        audio={false}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        videoConstraints={videoConstraints}
+                        className={styles.CamCont}
+                        mirrored={true}
+                    />
+                ) : (
+                    <img src={capturedImage} alt="Captured" className={styles.CamCont}/>
+                )}
                 <button onClick={capture} className={styles.captureBtn} disabled={!buttonActive}>Capture photo</button>
             </div>
         </>
-    )
+    );
 }
 
 WebCamCont.propTypes = {

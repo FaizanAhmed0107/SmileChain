@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler');
-const truffle_connect = require('../truffle/Contract');
 const Image = require('../models/imageModel');
 const User = require('../models/userModel');
 
@@ -17,13 +16,13 @@ const checkImage = asyncHandler(async (req, res) => {
             res.status(400);
             throw new Error('All fields are required');
         }
-        const imgResponse = await Image.create({owner: req.user.id, image, time, likes: 0, stars});
+        const imgResponse = await Image.create({owner: req.user.id, image, time, stars});
 
-        truffle_connect.getOwner(function (accounts) {
-            truffle_connect.sendEther(accounts[0], user.account, () => {
-                console.log('Etherium transferred');
-            })
-        })
+        // truffle_connect.getOwner(function (accounts) {
+        //     truffle_connect.sendEther(accounts[0], user.account, () => {
+        //         console.log('Etherium transferred');
+        //     })
+        // })
 
         const io = req.app.get('io');
         io.emit('new-image', imgResponse);
