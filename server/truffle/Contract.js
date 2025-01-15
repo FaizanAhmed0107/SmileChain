@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const contract = require('truffle-contract');
-const ether_send = require('../../web3/build/contracts/EtherSender.json');
+const ether_send = require('../../web3/build/contracts/Rewards.json');
 const EtherSend = contract(ether_send);
 
 

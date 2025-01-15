@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Account is required']
     },
+    points: {
+        type: Number,
+        default: 0
+    },
     likedImages: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
