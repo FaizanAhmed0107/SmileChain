@@ -15,6 +15,7 @@ contract Rewards {
     event ContractToppedUp(uint256 amount);
     event EtherRewardModified(uint256 indexed points, uint256 etherValue, address indexed modifiedBy, uint256 timestamp);
     event OtherRewardModified(uint256 indexed points, string details, address indexed modifiedBy, uint256 timestamp);
+    event RewardDeleted(uint256 indexed points, address indexed modifiedBy, uint256 timestamp);
 
     constructor() {
         owner = msg.sender;
@@ -56,6 +57,7 @@ contract Rewards {
             if (rewardKeys[i] == _points) {
                 rewardKeys[i] = rewardKeys[rewardKeys.length - 1];
                 rewardKeys.pop();
+                emit RewardDeleted(_points, msg.sender, block.timestamp);
                 break;
             }
         }
