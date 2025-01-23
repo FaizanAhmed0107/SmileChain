@@ -16,7 +16,7 @@ const server = http.createServer(app);
 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://smile-chain.vercel.app", // Add your production frontend URL
+    "https://smile-chain.vercel.app",
 ];
 
 const io = new Server(server, {
@@ -38,6 +38,7 @@ app.use(cors({
 app.use(express.json());
 app.use('/api/image', require('./routes/imageRoute'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/rewards', require('./routes/rewardRoute'));
 app.use(errorHandler);
 
 io.on('connection', (socket) => {

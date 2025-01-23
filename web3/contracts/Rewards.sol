@@ -41,10 +41,7 @@ contract Rewards {
             revert("Either etherValue or details must be provided.");
         }
 
-        if (
-            !(etherRewards[_points] > 0 ||
-            bytes(otherRewards[_points]).length > 0)
-        ) {
+        if (!(etherRewards[_points] > 0 || bytes(otherRewards[_points]).length > 0)) {
             rewardKeys.push(_points);
         }
     }

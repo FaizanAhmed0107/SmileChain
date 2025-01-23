@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     likedImages: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
