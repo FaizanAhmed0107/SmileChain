@@ -162,9 +162,23 @@ const redeemPoint = asyncHandler(async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500);
-        throw new Error('Failed to Delete Reward.');
+        throw new Error('Failed to Redeem Reward.');
+    }
+});
+
+// @desc get all rewards
+// @route GET /api/rewards/all
+// @access public
+const getRewards = asyncHandler(async (req, res) => {
+    try {
+        const rewards = await Reward.find().select("points type value");
+        res.status(200).json({message: "Rewards Fetched", data: rewards});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Fetch Rewards.');
     }
 });
 
 
-module.exports = {addReward, deleteReward, getPoints, redeemPoint}
+module.exports = {addReward, deleteReward, getPoints, redeemPoint, getRewards}
