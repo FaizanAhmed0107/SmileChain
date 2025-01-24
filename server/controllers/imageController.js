@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Image = require('../models/imageModel');
 const User = require('../models/userModel');
+const Admin = require('../models/AdminModel')
 const truffle_connect = require("../truffle/Contract");
 
 const checkImage = asyncHandler(async (req, res) => {
@@ -13,14 +14,19 @@ const checkImage = asyncHandler(async (req, res) => {
 
         const {image, time, stars} = req.body;
         if (!image || !time) {
-            console.log(image, time, stars)
+            console.log(image, time, stars);
             res.status(400);
-            throw new Error('All fields are required');
+            throw new Error("All fields are required");
         }
         const imgResponse = await Image.create({owner: req.user.id, image, time, stars});
 
+        const adminValue = await Admin.findOne({anchor: "anchor"});
+        if (!adminValue || !adminValue.pointsToAdd) {
+            throw new Error("Admin configuration missing or incomplete");
+        }
+
         truffle_connect.getOwner((accounts) => {
-            truffle_connect.addUserPoints(accounts[0], user.account, 1);
+            truffle_connect.addUserPoints(accounts[0], user.account, adminValue.pointsToAdd);
         });
 
         truffle_connect.getBalancePoints(user.account, (ans) => {
@@ -29,14 +35,14 @@ const checkImage = asyncHandler(async (req, res) => {
                 .catch((err) => console.error("Error updating points:", err));
         });
 
-        const io = req.app.get('io');
-        io.emit('new-image', imgResponse);
+        const io = req.app.get("io");
+        io.emit("new-image", imgResponse);
 
         res.status(201).json({message: "Image processed successfully", data: image.length});
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500);
-        throw new Error('Failed to process the image');
+        throw new Error("Failed to process the image");
     }
 });
 
