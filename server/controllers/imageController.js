@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Image = require('../models/imageModel');
 const User = require('../models/userModel');
+const truffle_connect = require("../truffle/Contract");
 
 const checkImage = asyncHandler(async (req, res) => {
     try {
@@ -18,11 +19,15 @@ const checkImage = asyncHandler(async (req, res) => {
         }
         const imgResponse = await Image.create({owner: req.user.id, image, time, stars});
 
-        // truffle_connect.getOwner(function (accounts) {
-        //     truffle_connect.sendEther(accounts[0], user.account, () => {
-        //         console.log('Etherium transferred');
-        //     })
-        // })
+        truffle_connect.getOwner((accounts) => {
+            truffle_connect.addUserPoints(accounts[0], user.account, 1);
+        });
+
+        truffle_connect.getBalancePoints(user.account, (ans) => {
+            User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
+                .then(() => console.log("User points updated successfully"))
+                .catch((err) => console.error("Error updating points:", err));
+        });
 
         const io = req.app.get('io');
         io.emit('new-image', imgResponse);

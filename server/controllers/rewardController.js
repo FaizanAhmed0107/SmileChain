@@ -52,4 +52,82 @@ const addReward = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = {addReward}
+// @desc Delete a Reward
+// @route POST /api/rewards/del
+// @access private
+const deleteReward = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
+        const {points} = req.body;
+        if (!points) {
+            console.log(points);
+            res.status(400);
+            throw new Error('All fields are required');
+        }
+
+        truffle_connect.getOwner((accounts) => {
+            truffle_connect.delReward(accounts[0], parseInt(points));
+        });
+
+        const reward = await Reward.findOne({points});
+        if (!reward) {
+            console.log("No such Reward", {points});
+            res.status(404);
+            throw new Error('Reward not found.');
+        }
+        const rewardResponse = await Reward.findOneAndDelete({points});
+
+        res.status(201).json({message: "Reward Deleted", data: rewardResponse});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Delete Reward.');
+    }
+});
+
+const addPoint = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
+
+        truffle_connect.getOwner((accounts) => {
+            truffle_connect.addUserPoints(user.account, user.account, parseInt(points));
+        });
+
+
+        const {points} = req.body;
+        if (!points) {
+            console.log(points);
+            res.status(400);
+            throw new Error('All fields are required');
+        }
+
+        truffle_connect.getOwner((accounts) => {
+            truffle_connect.delReward(accounts[0], parseInt(points));
+        });
+
+        const reward = await Reward.findOne({points});
+        if (!reward) {
+            console.log("No such Reward", {points});
+            res.status(404);
+            throw new Error('Reward not found.');
+        }
+        const rewardResponse = await Reward.findOneAndDelete({points});
+
+        res.status(201).json({message: "Reward Deleted", data: rewardResponse});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Add Point.');
+    }
+});
+
+
+module.exports = {addReward, deleteReward, addPoint}
