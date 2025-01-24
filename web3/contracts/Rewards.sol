@@ -41,7 +41,15 @@ contract Rewards {
             revert("Either etherValue or details must be provided.");
         }
 
-        if (!(etherRewards[_points] > 0 || bytes(otherRewards[_points]).length > 0)) {
+        // Add _points to rewardKeys if it's not already present
+        bool exists = false;
+        for (uint256 i = 0; i < rewardKeys.length; i++) {
+            if (rewardKeys[i] == _points) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
             rewardKeys.push(_points);
         }
     }
@@ -112,5 +120,9 @@ contract Rewards {
 
     function getContractBalance() public view returns (uint256) {
         return address(this).balance;
+    }
+
+    function getRewardKeys() public view returns (uint256[] memory) {
+        return rewardKeys;
     }
 }

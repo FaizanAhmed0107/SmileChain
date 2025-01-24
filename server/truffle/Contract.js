@@ -33,8 +33,6 @@ function getBalance(sender, callback) {
         callback(balance.toString()); // Balance is converted to a string for compatibility
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to get Balance');
     });
 }
 
@@ -48,8 +46,6 @@ function getBalancePoints(sender, callback) {
         callback(balance.toString()); // Balance is converted to a string for compatibility
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to get Balance Points.');
     });
 }
 
@@ -66,8 +62,6 @@ function topUpEther(sender, amount) {
         });
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to Top up Ether.');
     });
 }
 
@@ -80,8 +74,6 @@ function addUserPoints(sender, receiver, amount) {
         await data.addPoints(receiver, amount, {from: sender});
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to Add Points.');
     });
 }
 
@@ -94,8 +86,6 @@ function redeemPoints(sender, amount) {
         await data.redeemPoints(amount, {from: sender});
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to Redeem Points.');
     });
 }
 
@@ -108,8 +98,6 @@ function addReward(sender, points, ethers, details) {
         await data.modifyReward(points, Web3.utils.toWei(ethers, 'ether'), details, {from: sender});
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to Add Reward.');
     });
 }
 
@@ -126,8 +114,6 @@ function getOneReward(sender, points, callback) {
         callback(ans);
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to Fetch Reward.');
     });
 }
 
@@ -140,10 +126,23 @@ function delReward(sender, points) {
         await data.deleteReward(points, {from: sender});
     }).catch((e) => {
         console.log(e);
-        res.status(404);
-        throw new Error('Failed to Add Reward.');
     });
 }
+
+function getRewardKeys(sender, callback) {
+    const self = this;
+    Rewards.setProvider(self.web3.currentProvider);
+    let data;
+
+    Rewards.deployed().then(async (instance) => {
+        data = instance;
+        const rewardKeys = await data.getRewardKeys({from: sender});
+        callback(rewardKeys); // Pass the result to the callback
+    }).catch((e) => {
+        console.error("Error fetching reward keys:", e);
+    });
+}
+
 
 module.exports = {
     getOwner,
@@ -154,5 +153,6 @@ module.exports = {
     redeemPoints,
     addReward,
     getOneReward,
+    getRewardKeys,
     delReward
 }
