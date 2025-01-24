@@ -77,16 +77,15 @@ function addUserPoints(sender, receiver, amount) {
     });
 }
 
-function redeemPoints(sender, amount) {
-    const self = this;
-    Rewards.setProvider(self.web3.currentProvider);
-    let data;
-    Rewards.deployed().then(async (instance) => {
-        data = instance;
-        await data.redeemPoints(amount, {from: sender});
-    }).catch((e) => {
-        console.log(e);
-    });
+async function redeemPoints(sender, amount) {
+    try {
+        const self = this;
+        Rewards.setProvider(self.web3.currentProvider);
+        const instance = await Rewards.deployed();
+        await instance.redeemPoints(amount, {from: sender});
+    } catch (error) {
+        throw new Error(`Failed to redeem points: ${error.message}`);
+    }
 }
 
 function addReward(sender, points, ethers, details) {
@@ -114,6 +113,7 @@ function getOneReward(sender, points, callback) {
         callback(ans);
     }).catch((e) => {
         console.log(e);
+        callback(null);
     });
 }
 

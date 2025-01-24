@@ -6,19 +6,19 @@ const router = express.Router();
 const {
     addReward,
     deleteReward,
-    addPoint
+    getPoints,
+    redeemPoint
 } = require("../controllers/rewardController");
-const truffle_connect = require("../truffle/Contract");
 
-// router.get("/", validateToken, getPoints);
 router.post('/add', validateToken, onlyAdmin, addReward);
 router.post('/del', validateToken, onlyAdmin, deleteReward);
-router.post("/addPoint", validateToken, addPoint);
+router.get("/", validateToken, getPoints);
+router.post("/redeem", validateToken, redeemPoint);
 
-
-// router.get("/", async (req, res) => {
-//     truffle_connect.getOwner((accounts) => {
-//         truffle_connect.getOneReward(accounts[0], 500, (ans) => {
+// const truffle_connect = require("../truffle/Contract");
+// router.get("/test2", async (req, res) => {
+//     truffle_connect.getOwner((bool, accounts) => {
+//         truffle_connect.getOneReward(accounts[0], 20, (ans) => {
 //             res.send(ans);
 //         });
 //     });

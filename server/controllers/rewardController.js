@@ -80,7 +80,6 @@ const deleteReward = asyncHandler(async (req, res) => {
             throw new Error('Reward not found.');
         }
         const rewardResponse = await Reward.findOneAndDelete({points});
-
         res.status(201).json({message: "Reward Deleted", data: rewardResponse});
     } catch (error) {
         console.log(error);
@@ -89,45 +88,83 @@ const deleteReward = asyncHandler(async (req, res) => {
     }
 });
 
-const addPoint = asyncHandler(async (req, res) => {
+// @desc get Points of a User
+// @route GET /api/rewards/
+// @access private
+const getPoints = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
         if (!user) {
             res.status(404);
             throw new Error("User not found");
         }
+        res.status(201).json({message: "Point Found", points: user.points});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Delete Reward.');
+    }
+});
 
-        truffle_connect.getOwner((accounts) => {
-            truffle_connect.addUserPoints(user.account, user.account, parseInt(points));
-        });
-
-
+// @desc redeem Points by a User
+// @route POST /api/rewards/redeem
+// @access private
+const redeemPoint = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
         const {points} = req.body;
         if (!points) {
             console.log(points);
             res.status(400);
             throw new Error('All fields are required');
         }
-
-        truffle_connect.getOwner((accounts) => {
-            truffle_connect.delReward(accounts[0], parseInt(points));
-        });
-
+        if (user.points < points) {
+            res.status(403).json({message: "Not Enough Points", points: user.points});
+            truffle_connect.getBalancePoints(user.account, (ans) => {
+                User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
+                    .then(() => console.log("User points updated successfully"))
+                    .catch((err) => console.error("Error updating points:", err));
+            });
+        }
         const reward = await Reward.findOne({points});
         if (!reward) {
-            console.log("No such Reward", {points});
-            res.status(404);
-            throw new Error('Reward not found.');
+            res.status(404).json({message: "No Such Reward"});
         }
-        const rewardResponse = await Reward.findOneAndDelete({points});
 
-        res.status(201).json({message: "Reward Deleted", data: rewardResponse});
+        if (reward.type === 'Ether') {
+            truffle_connect.getOwner((accounts) => {
+                truffle_connect.topUpEther(accounts[0], reward.value);
+            });
+        } else {
+            //TODO
+        }
+
+        try {
+            await truffle_connect.redeemPoints(user.account, points);
+            truffle_connect.getBalancePoints(user.account, (ans) => {
+                User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
+                    .then(() => console.log("User points updated successfully"))
+                    .catch((err) => console.error("Error updating points:", err));
+            });
+            res.status(201).json({message: "Redeemed Successfully", points});
+        } catch (err) {
+            truffle_connect.getOwner((accounts) => {
+                truffle_connect.getOneReward(accounts[0], points, async () => {
+                    await Reward.findOneAndDelete({points});
+                });
+            });
+            res.status(404).json({message: "Reward Synchronization Error"});
+        }
     } catch (error) {
         console.log(error);
         res.status(500);
-        throw new Error('Failed to Add Point.');
+        throw new Error('Failed to Delete Reward.');
     }
 });
 
 
-module.exports = {addReward, deleteReward, addPoint}
+module.exports = {addReward, deleteReward, getPoints, redeemPoint}
