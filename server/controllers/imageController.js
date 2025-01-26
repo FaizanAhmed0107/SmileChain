@@ -23,13 +23,21 @@ const checkImage = asyncHandler(async (req, res) => {
             throw new Error("Admin configuration missing or incomplete");
         }
 
+        if (Date.now() - new Date(user.lastPost).getTime() < adminValue.postDelay * 60 * 60 * 1000) {
+            res.status(403).json({
+                title: "Forbidden",
+                message: `Cant post now wait for ${adminValue.postDelay} hours since last Post.`
+            });
+            return;
+        }
+
         const imgResponse = await Image.create({
-            owner: req.user.id,
-            image,
-            time,
-            stars,
-            points: adminValue.pointsToAdd
+            owner: req.user.id, image, time, stars, points: adminValue.pointsToAdd
         });
+        User.findByIdAndUpdate(req.user.id, {lastPost: Date.now()})
+            .then(() => console.log("User points updated successfully"))
+            .catch((err) => console.error("Error updating points:", err));
+
 
         await truffle_connect.getOwner((accounts) => {
             truffle_connect.addUserPoints(accounts[0], user.account, adminValue.pointsToAdd);

@@ -41,8 +41,13 @@ function WebCamCont(props) {
             setTimeout(() => {
                 getPoint();
             }, 8000);
+            return true;
         } else {
             console.log(response.message || "Error Fetching Contacts!");
+            toast.error(response.message, {
+                position: "top-right",
+            });
+            return false;
         }
     };
 
@@ -80,10 +85,12 @@ function WebCamCont(props) {
                     position: "top-right",
                 });
             else if (faceConfidence > props.threshold) {
-                toast.success("Congratulations for Smiling.", {
-                    position: "top-right",
-                });
-                await checkImage(img, faceConfidence); // Ensure checkImage is awaited to handle async operations.
+                const result = await checkImage(img, faceConfidence); // Ensure checkImage is awaited to handle async operations.
+                if (result) {
+                    toast.success("Congratulations for Smiling.", {
+                        position: "top-right",
+                    });
+                }
             } else {
                 toast.warning("Please Smile", {
                     position: "top-right",

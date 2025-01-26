@@ -8,6 +8,10 @@ const adminSchema = new mongoose.Schema({
     pointsToAdd: {
         type: Number,
         default: 1
+    },
+    postDelay: {
+        type: Number,
+        default: 24
     }
 });
 

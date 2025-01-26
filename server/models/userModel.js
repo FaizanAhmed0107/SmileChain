@@ -30,7 +30,15 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Image'
-    }]
+    }],
+    lastPost: {
+        type: Date,
+        default: () => {
+            const currentDate = new Date();
+            currentDate.setFullYear(currentDate.getFullYear() - 5); // Sub 5 years
+            return currentDate;
+        }
+    }
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

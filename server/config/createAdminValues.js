@@ -5,6 +5,7 @@ const createAdminValues = async () => {
     if (!valueExists) {
         await Admin.create({
             anchor: "anchor",
+            postDelay: 0.02
         });
         console.log("Admin data created");
     }
