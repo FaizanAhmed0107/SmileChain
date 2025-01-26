@@ -19,12 +19,4 @@ router.get("/", validateToken, getPoints);
 router.post("/redeem", validateToken, redeemPoint);
 router.get("/all", getRewards);
 
-router.get("/test", async (req, res) => {
-    truffle_connect.getOwner((accounts) => {
-        truffle_connect.getBalancePoints(accounts[1], (ans) => {
-            res.send(ans);
-        });
-    });
-});
-
 module.exports = router;
