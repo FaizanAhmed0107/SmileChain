@@ -22,6 +22,10 @@ const imageSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please enter number of star']
     },
+    points: {
+        type: Number,
+        required: [true, 'Points is required']
+    }
 });
 
 module.exports = mongoose.model("Image", imageSchema);

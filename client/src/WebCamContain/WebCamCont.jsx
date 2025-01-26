@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import CheckImage from "../API_Requests/CheckImage.jsx";
 import PropTypes from "prop-types";
 import {detectFaces} from "../util/smileDetection.js";
+import getPoints from "../API_Requests/getPoints.jsx";
 
 function WebCamCont(props) {
     const [buttonActive, setButtonActive] = useState(true);
@@ -17,10 +18,29 @@ function WebCamCont(props) {
         facingMode: "user"
     };
 
+    const getPoint = async () => {
+        try {
+            const result = await getPoints(props.AccessToken);
+            if (result.success) {
+                props.setPoint(result.data.points);
+            } else {
+                console.error(result.message);
+            }
+        } catch (error) {
+            toast.error("Error fetching user points", {
+                position: "top-right",
+            });
+            console.error("Error fetching user points:", error);
+        }
+    }
+
     const checkImage = async (img, confidence) => {
         const response = await CheckImage(img, Math.round(confidence * 5), props.AccessToken);
         if (response.success) {
             // console.log(response.data)
+            setTimeout(() => {
+                getPoint();
+            }, 8000);
         } else {
             console.log(response.message || "Error Fetching Contacts!");
         }
@@ -104,6 +124,7 @@ function WebCamCont(props) {
 WebCamCont.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     AccessToken: PropTypes.string.isRequired,
+    setPoint: PropTypes.func.isRequired,
     threshold: PropTypes.number.isRequired
 }
 

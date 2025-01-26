@@ -103,6 +103,7 @@ function PhotoFeed(props) {
                                     id={image._id}
                                     likes={image.likes}
                                     isLoggedIn={props.isLoggedIn}
+                                    point={image.points}
                                 />
                             ))}
                         </div>

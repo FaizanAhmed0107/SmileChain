@@ -61,9 +61,11 @@ function SmileCard(props) {
         };
     }, [props.id]);
 
-    const etherIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" height={15} fill={'#957b27'}>
-            <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/>
+    const pointIcon = (
+        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"
+             strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" fill={"#ff2424"} stroke={"#ff2424"}></polyline>
+            <circle cx="12" cy="8" r="7" fill={"#ffd824"} stroke={"#ffd824"}></circle>
         </svg>
     )
 
@@ -82,7 +84,7 @@ function SmileCard(props) {
                 </button>
             </div>
             <p className={styles.winner}>$ Winner!</p>
-            <p className={styles.award}>🎉 0.01 {etherIcon} &nbsp; awarded! 🎉</p>
+            <p className={styles.award}>🎉 {props.point}{pointIcon} awarded! 🎉</p>
             <p className={styles.rating}>{props.rating}/5 <FaStar className={styles.star}/></p>
         </div>
     );
@@ -98,6 +100,7 @@ SmileCard.propTypes = {
     likedImg: PropTypes.arrayOf(PropTypes.string).isRequired,
     updateLikedImg: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
+    point: PropTypes.number.isRequired
 };
 
 export default SmileCard;

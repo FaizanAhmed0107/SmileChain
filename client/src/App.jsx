@@ -12,6 +12,7 @@ function App() {
     const [isSmall, setIsSmall] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(sessionStorage.getItem("isLoggedIn")) || false);
     const [AccessToken, setAccessToken] = useState(sessionStorage.getItem("AccessToken") || "");
+    const [point, setPoint] = useState(0);
     const [showLogin, setShowLogin] = useState(false);
 
     // Sync state changes to sessionStorage
@@ -41,8 +42,10 @@ function App() {
                         AccessToken={AccessToken}
                         setAccessToken={setAccessToken}
                         isSmall={isSmall}
+                        point={point}
+                        setPoint={setPoint}
                     />
-                    <WebCamCont isLoggedIn={isLoggedIn} AccessToken={AccessToken} threshold={0}/>
+                    <WebCamCont isLoggedIn={isLoggedIn} AccessToken={AccessToken} setPoint={setPoint} threshold={0}/>
                     <PhotoFeed AccessToken={AccessToken} isLoggedIn={isLoggedIn}/>
                 </>
             }

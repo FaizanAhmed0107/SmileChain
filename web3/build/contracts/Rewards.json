@@ -20396,12 +20396,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x24D3b078c3f33Fd9d3caf8d8c216001738aCC331",
-      "transactionHash": "0xabe2f79e9bb51ce3b416f711101207000fa01fc0f54129da9cbe8da014cbaf15"
+      "address": "0x89aa35479be6351B28fF9BF7c71520a063dF18d0",
+      "transactionHash": "0xb2cca0c86a15c71e4a47d4dab1f86e9d4c00691b84a1a8fc829fc4cc02998bd1"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-01-24T18:58:25.884Z",
+  "updatedAt": "2025-01-26T18:19:55.881Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

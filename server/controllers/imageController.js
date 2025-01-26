@@ -18,22 +18,30 @@ const checkImage = asyncHandler(async (req, res) => {
             res.status(400);
             throw new Error("All fields are required");
         }
-        const imgResponse = await Image.create({owner: req.user.id, image, time, stars});
-
         const adminValue = await Admin.findOne({anchor: "anchor"});
         if (!adminValue || !adminValue.pointsToAdd) {
             throw new Error("Admin configuration missing or incomplete");
         }
 
-        truffle_connect.getOwner((accounts) => {
+        const imgResponse = await Image.create({
+            owner: req.user.id,
+            image,
+            time,
+            stars,
+            points: adminValue.pointsToAdd
+        });
+
+        await truffle_connect.getOwner((accounts) => {
             truffle_connect.addUserPoints(accounts[0], user.account, adminValue.pointsToAdd);
         });
 
-        truffle_connect.getBalancePoints(user.account, (ans) => {
-            User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
-                .then(() => console.log("User points updated successfully"))
-                .catch((err) => console.error("Error updating points:", err));
-        });
+        setTimeout(async () => {
+            await truffle_connect.getBalancePoints(user.account, (ans) => {
+                User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
+                    .then(() => console.log("User points updated successfully"))
+                    .catch((err) => console.error("Error updating points:", err));
+            });
+        }, 5000);
 
         const io = req.app.get("io");
         io.emit("new-image", imgResponse);

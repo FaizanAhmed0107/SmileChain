@@ -66,6 +66,20 @@
     justify-content: space-evenly;
 }
 
+.pointsBox {
+    align-content: center;
+}
+
+.points {
+    background-color: var(--primary);
+    color: var(--secondary);
+    width: fit-content;
+    padding: 5px;
+    margin: 0 0 0 10%;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
 @media (max-width: 870px) {
     .head {
         display: flex;
@@ -74,5 +88,9 @@
 
     .loginCont, .logoutCont {
         padding: 0;
+    }
+
+    .points {
+        min-width: fit-content;
     }
 }
