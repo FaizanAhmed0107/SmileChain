@@ -1,7 +1,6 @@
 .head {
     width: 100%;
-    background: linear-gradient(90deg, #76c893, #34a0a4);
-    color: #fff;
+    background: var(--background-accent);
     padding: 20px 0;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -31,9 +30,8 @@
     font-size: 1rem;
     font-weight: 500;
     border: none;
-    border-radius: 25px;
+    border-radius: 4px;
     cursor: pointer;
-    color: #000000;
     transition: all 0.3s ease-in-out;
 }
 
@@ -41,12 +39,12 @@
     position: absolute;
     top: 35%;
     right: 5%;
-    background: #33f838;
+    background: var(--primary);
+    color: var(--text-dark);
 }
 
 .login:hover {
-    background: #27bf2c;
-    color: #ffffff;
+    background: var(--primary);
     transform: scale(1.05);
 }
 
@@ -61,11 +59,10 @@
 }
 
 .logout {
-    background: #ffffff;
+    background: var(--primary);
 }
 
 .logout:hover {
-    background: #e8e8e8;
     transform: scale(1.05);
 }
 
@@ -79,11 +76,15 @@
 
 .centeredButton {
     margin-top: 15px;
-    background: #33f838;
+    background: #4F46E5;
 }
 
 .centeredButton:hover {
-    background: #27bf2c;
+    background: #382fbd;
     color: #ffffff;
     transform: scale(1.05);
+}
+
+@media (max-width: 1060px) {
+
 }

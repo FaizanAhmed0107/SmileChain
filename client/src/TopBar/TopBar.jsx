@@ -42,8 +42,8 @@ function TopBar(props) {
 
     const login = (
         <div>
-            <button className={props.isSmall ? styles.centeredButton : styles.login} onClick={displayLogin}>Log in /
-                Sign up
+            <button className={props.isSmall ? styles.centeredButton : styles.login} onClick={displayLogin}>
+                Log in / Sign up
             </button>
         </div>
     );
