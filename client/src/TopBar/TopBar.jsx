@@ -41,27 +41,46 @@ function TopBar(props) {
     };
 
     const login = (
-        <div>
-            <button className={props.isSmall ? styles.centeredButton : styles.login} onClick={displayLogin}>
+        <div className={styles.loginCont}>
+            <button className={styles.loginButton} onClick={displayLogin}>
                 Log in / Sign up
             </button>
         </div>
     );
 
     const loggedIn = (
-        <div className={props.isSmall ? styles.centeredContainer : styles.username}>
-            <p>Welcome, {user}</p>
-            <button className={styles.logout} onClick={Logout}>Log out</button>
+        <div className={styles.logoutCont}>
+            <p className={styles.username}>Welcome, {user}</p>
+            <button className={styles.logoutButton} onClick={Logout}>Log out</button>
         </div>
+    );
+
+    const points = (
+        <div style={{alignContent: "center"}}>Test</div>
     );
 
     return (
         <header className={styles.head}>
-            <div>
-                <h1 className={styles.heading}>Smile Rewards</h1>
-                <p className={styles.below}>Unlock happiness and earn rewards for your genuine smiles!</p>
-            </div>
-            {props.isLoggedIn ? loggedIn : login}
+            {props.isSmall ?
+                <>
+                    <div className={styles.top}>
+                        <h1 className={styles.heading}>Smile Chain</h1>
+                        <p className={styles.below}>Unlock happiness and earn rewards for your genuine smiles!</p>
+                    </div>
+                    <div className={styles.bottom}>
+                        {props.isLoggedIn ? <>{points} {loggedIn}</> : login}
+                    </div>
+                </>
+                :
+                <>
+                    {points}
+                    <div>
+                        <h1 className={styles.heading}>Smile Chain</h1>
+                        <p className={styles.below}>Unlock happiness and earn rewards for your genuine smiles!</p>
+                    </div>
+                    {props.isLoggedIn ? loggedIn : login}
+                </>
+            }
         </header>
     );
 }

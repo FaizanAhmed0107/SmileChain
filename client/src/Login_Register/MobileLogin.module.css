@@ -1,4 +1,5 @@
 .login_container {
+    color: var(--text);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,8 +27,10 @@
 }
 
 .userInput {
-    background-color: #eee;
-    border: none;
+    background-color: var(--background-accent);
+    color: var(--text);
+    border: 1px solid var(--primary);
+    /*border: none;*/
     margin: 15px 0;
     padding: 10px 15px;
     font-size: 13px;
@@ -37,8 +40,8 @@
 }
 
 .passBox {
-    background-color: #eee;
-    border: none;
+    background-color: var(--background-accent);
+    border: 1px solid var(--primary);
     margin: 15px 0;
     padding: 10px 15px;
     font-size: 13px;
@@ -52,21 +55,22 @@
 }
 
 .passField {
+    background-color: var(--background-accent);
+    color: var(--text);
     width: 100%;
     font-size: 13px;
-    background-color: #eee;
     border: none;
     outline: none;
 }
 
 .visibleIcon {
-    color: #818181;
+    color: var(--accent);
     cursor: pointer;
 }
 
 .button {
-    background-color: #34a0a4;
-    color: #fff;
+    background-color: var(--secondary);
+    color: var(--text-dark);
     font-size: 12px;
     padding: 10px 45px;
     border: 1px solid transparent;

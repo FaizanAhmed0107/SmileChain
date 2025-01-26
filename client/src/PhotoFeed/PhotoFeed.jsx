@@ -86,10 +86,10 @@ function PhotoFeed(props) {
     return (
         <>
             {isLoading ?
-                <BallTriangle className={styles.loading} fill={"#34a0a4"} speed={.75}/>
+                <BallTriangle className={styles.loading} fill={"hsl(201, 50%, 73%)"} speed={.75} stroke={"hsl(201, 50%, 73%)"}/>
                 : images.length > 0 ?
-                    <>
-                        <p className={styles.head}>Winning Pictures</p>
+                    <div className={styles.box}>
+                        <p className={styles.head}>Winning Pictures!</p>
                         <div className={styles.container}>
                             {images.map((image, index) => (
                                 <SmileCard
@@ -106,7 +106,7 @@ function PhotoFeed(props) {
                                 />
                             ))}
                         </div>
-                    </>
+                    </div>
                     : <></>
             }
         </>

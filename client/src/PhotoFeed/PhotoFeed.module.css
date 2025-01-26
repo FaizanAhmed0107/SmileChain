@@ -1,6 +1,11 @@
+.box {
+    width: fit-content;
+    margin: auto;
+}
+
+
 .container {
-    width: 100%;
-    padding-bottom: 50px;
+    padding: 0 50px 50px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -8,15 +13,15 @@
 }
 
 .head {
+    font-family: 'Montserrat', sans-serif;
     text-align: center;
-    font-size: 50px;
-    font-family: 'Poppins', sans-serif;
-    color: #34a0a4;
-    text-decoration: underline;
-    margin-bottom: 5px;
+    font-weight: 20;
+    font-size: 24px;
+    color: var(--text);
 }
 
 .loading {
     width: 100%;
     text-align: center;
+    margin-bottom: 50px;
 }

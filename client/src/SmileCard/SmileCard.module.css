@@ -2,13 +2,10 @@
     position: relative;
     width: fit-content;
     min-width: 320px;
-    background-color: #fffbe7;
-    border: 2px solid #ffdd57;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--background-accent);
+    border-radius: 12px;
     overflow: hidden;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
+    font-family: 'Ubuntu', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,34 +15,39 @@
 .image {
     padding: 10px 10px 0;
     width: 300px;
-    border-radius: 20px;
-    /*border-bottom: 2px solid #f9c846;*/
+    border-radius: 19px;
+}
+
+.line {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    padding: 0 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .time {
     font-size: 0.9rem;
-    color: #888;
+    color: var(--text);
     margin-bottom: 10px;
-}
-
-.line {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
 }
 
 .likes {
     padding: 3px;
-    border: #ffcd00 solid 2px;
+    font-size: 15px;
+    border: var(--accent) solid 2px;
+    background-color: var(--primary);
+    color: var(--text-dark);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
 .likes.liked {
-    background: #abe2f6;
+    background: var(--secondary);
+    color: var(--text);
 }
 
 .likes:hover {
@@ -53,39 +55,46 @@
 }
 
 .likes:active {
-    transform: scale(0.85);
-    background: #ffffff;
+    transform: scale(0.9);
 }
 
 .winner, .award {
     margin: 0;
     font-size: 1rem;
-    color: #34a0a4;
+    color: var(--secondary);
     font-weight: bold;
 }
 
 .winner {
     padding: 5px;
-    background-color: #c8ffd9;
+    background-color: var(--primary);
     border-radius: 10px;
-    margin-top: -5px;
+    /*margin-top: -5px;*/
     margin-bottom: 2px;
+    box-sizing: border-box;
+}
+
+.award {
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .rating {
     position: absolute;
     top: 10px;
     right: 23px;
-    background-color: #34a0a4;
-    color: #fff;
+    background-color: var(--primary);
+    color: var(--text-dark);
     padding: 5px 10px;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.star {
+    color: var(--secondary);
 }
 
 .button:active {
     transform: scale(0.9);
-    background-color: #0056b3;
 }

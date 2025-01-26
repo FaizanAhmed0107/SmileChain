@@ -4,6 +4,20 @@
     --background: hsl(207, 36%, 5%);
     --background-accent: hsl(207, 36%, 10%);
     --primary: hsl(201, 50%, 73%);
+    --primary-hover: hsl(201, 50%, 60%);
     --secondary: hsl(202, 64%, 31%);
     --accent: hsl(202, 78%, 58%);
+
+    --linearPrimarySecondary: linear-gradient(hsl(201, 50%, 73%), hsl(202, 64%, 31%));
+    --linearPrimaryAccent: linear-gradient(hsl(201, 50%, 73%), hsl(202, 78%, 58%));
+    --linearSecondaryAccent: linear-gradient(hsl(202, 64%, 31%), hsl(202, 78%, 58%));
+    --radialPrimarySecondary: radial-gradient(hsl(201, 50%, 73%), hsl(202, 64%, 31%));
+    --radialPrimaryAccent: radial-gradient(hsl(201, 50%, 73%), hsl(202, 78%, 58%));
+    --radialSecondaryAccent: radial-gradient(hsl(202, 64%, 31%), hsl(202, 78%, 58%));
+    --linearBackground: linear-gradient(hsl(207, 46%, 7%), hsl(207, 36%, 5%));
+
+    --linearPrimarySecondary90: linear-gradient(90deg, hsl(201, 50%, 73%), hsl(202, 64%, 31%));
+    --linearPrimaryAccent90: linear-gradient(90deg, hsl(201, 50%, 73%), hsl(202, 78%, 58%));
+    --linearSecondaryAccent90: linear-gradient(90deg, hsl(202, 64%, 31%), hsl(202, 78%, 58%));
+    --linearBackground90: linear-gradient(90deg, hsl(207, 56%, 7%), hsl(207, 36%, 5%));
 }

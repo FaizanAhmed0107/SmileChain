@@ -2,89 +2,77 @@
     width: 100%;
     background: var(--background-accent);
     padding: 20px 0;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;
-    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
 }
 
 .heading {
+    text-align: center;
+    color: var(--primary);
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     margin-top: 0;
 }
 
 .below {
+    text-align: center;
     font-size: 1.2rem;
     font-weight: 400;
     opacity: 0.9;
     margin: 0;
 }
 
-.login, .logout, .centeredButton {
+.loginCont, .logoutCont {
+    font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10%;
+    height: 100%;
+    gap: 10px;
+}
+
+.loginButton, .logoutButton {
+    font-family: 'Ubuntu', sans-serif;
     width: fit-content;
     margin: 5px 0;
     padding: 0 15px;
-    height: 30px;
+    min-height: 30px;
     font-size: 1rem;
     font-weight: 500;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-}
-
-.login {
-    position: absolute;
-    top: 35%;
-    right: 5%;
     background: var(--primary);
     color: var(--text-dark);
 }
 
-.login:hover {
-    background: var(--primary);
+.loginButton:hover, .logoutButton:hover {
+    background: var(--primary-hover);
     transform: scale(1.05);
 }
 
 .username {
-    position: absolute;
-    top: 30%;
-    right: 5%;
+    text-align: right;
+}
+
+.bottom {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
-.logout {
-    background: var(--primary);
-}
+@media (max-width: 870px) {
+    .head {
+        display: flex;
+        flex-direction: column;
+    }
 
-.logout:hover {
-    transform: scale(1.05);
-}
-
-.centeredContainer {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.centeredButton {
-    margin-top: 15px;
-    background: #4F46E5;
-}
-
-.centeredButton:hover {
-    background: #382fbd;
-    color: #ffffff;
-    transform: scale(1.05);
-}
-
-@media (max-width: 1060px) {
-
+    .loginCont, .logoutCont {
+        padding: 0;
+    }
 }

@@ -95,7 +95,7 @@ function WebCamCont(props) {
                 ) : (
                     <img src={capturedImage} alt="Captured" className={styles.CamCont}/>
                 )}
-                <button onClick={capture} className={styles.captureBtn} disabled={!buttonActive}>Capture photo</button>
+                <button onClick={capture} className={styles.captureBtn} disabled={!buttonActive}>Capture Smile</button>
             </div>
         </>
     );

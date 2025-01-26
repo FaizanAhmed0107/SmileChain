@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import {toast} from "react-toastify";
 import styles from "./SmileCard.module.css";
 import socket from "../API_Requests/socket.js";
+import {IoMdThumbsUp} from "react-icons/io";
+import {FaStar} from "react-icons/fa";
 
 function SmileCard(props) {
     const [likes, setLikes] = useState(props.likes);
@@ -76,12 +78,12 @@ function SmileCard(props) {
                     }`}
                     onClick={likePic}
                 >
-                    👍{likes}
+                    <IoMdThumbsUp/>{likes}
                 </button>
             </div>
             <p className={styles.winner}>$ Winner!</p>
             <p className={styles.award}>🎉 0.01 {etherIcon} &nbsp; awarded! 🎉</p>
-            <p className={styles.rating}>{props.rating}/5⭐</p>
+            <p className={styles.rating}>{props.rating}/5 <FaStar className={styles.star}/></p>
         </div>
     );
 }
