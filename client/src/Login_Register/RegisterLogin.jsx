@@ -4,16 +4,18 @@ import styles from './RegisterLogin.module.css';
 import PropTypes from "prop-types";
 import {useState} from "react";
 import MobileLogin from "./MobileLogin.jsx";
+import {useNavigate} from 'react-router-dom';
 
 function RegisterLogin(props) {
     const [signUp, setSignUp] = useState(false);
+    const navigate = useNavigate();
 
     const toggleSignUp = () => {
         setSignUp((current) => !current);
     };
 
     const HideSignUp = () => {
-        props.setShowLogin(false)
+        navigate('/');
     };
 
     const stopPropagation = (event) => {
@@ -26,12 +28,12 @@ function RegisterLogin(props) {
                 props.isSmall ? (
                     <div className={styles.halfCard} onClick={stopPropagation}>
                         <MobileLogin setAccessToken={props.setAccessToken} toggleSignUp={toggleSignUp} signUp={signUp}
-                                     setShowLogin={props.setShowLogin} setIsLoggedIn={props.setIsLoggedIn}/>
+                                     setIsLoggedIn={props.setIsLoggedIn}/>
                     </div>
                 ) : (
                     <div className={styles.fullCard} onClick={stopPropagation}>
-                        <Login signUp={signUp} setIsLoggedIn={props.setIsLoggedIn} setAccessToken={props.setAccessToken}
-                               setShowLogin={props.setShowLogin}/>
+                        <Login signUp={signUp} setIsLoggedIn={props.setIsLoggedIn}
+                               setAccessToken={props.setAccessToken}/>
                         <Side signUp={signUp} toggleSignUp={toggleSignUp}/>
                     </div>
                 )
@@ -43,7 +45,6 @@ function RegisterLogin(props) {
 RegisterLogin.propTypes = {
     setIsLoggedIn: PropTypes.func.isRequired,
     setAccessToken: PropTypes.func.isRequired,
-    setShowLogin: PropTypes.func.isRequired,
     isSmall: PropTypes.bool.isRequired,
 }
 

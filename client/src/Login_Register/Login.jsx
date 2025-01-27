@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useEffect, useState} from "react";
 import HandleLogin from "../API_Requests/HandleLogin.jsx";
 import HandleSignup from "../API_Requests/HandleSignup.jsx";
+import {useNavigate} from 'react-router-dom';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -18,6 +19,7 @@ function Login(props) {
     const [password, setPassword] = useState("");
     const [confPassword, setConfPassword] = useState("");
     const [account, setAccount] = useState("");
+    const navigate = useNavigate();
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,7 +43,7 @@ function Login(props) {
             toast.success("Login successful!");
             props.setAccessToken(response.accessToken);
             props.setIsLoggedIn(true);
-            props.setShowLogin(false);
+            navigate('/');
         } else {
             toast.error(response.message || "Login failed!");
         }
@@ -62,7 +64,7 @@ function Login(props) {
                 toast.success("Account created successfully! Logging in...");
                 props.setAccessToken(response.accessToken);
                 props.setIsLoggedIn(true);
-                props.setShowLogin(false);
+                navigate('/');
             } else {
                 toast.error(response.message || "Signup failed!");
             }
@@ -142,8 +144,7 @@ function Login(props) {
 Login.propTypes = {
     signUp: PropTypes.bool.isRequired,
     setIsLoggedIn: PropTypes.func.isRequired,
-    setAccessToken: PropTypes.func.isRequired,
-    setShowLogin: PropTypes.func.isRequired
+    setAccessToken: PropTypes.func.isRequired
 };
 
 export default Login;

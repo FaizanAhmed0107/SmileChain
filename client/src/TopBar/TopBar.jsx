@@ -4,9 +4,11 @@ import {useEffect, useState} from "react";
 import getAbout from "../API_Requests/GetAbout.jsx";
 import getPoints from "../API_Requests/getPoints.jsx";
 import {toast} from "react-toastify";
+import {useNavigate} from 'react-router-dom';
 
 function TopBar(props) {
     const [user, setUser] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getUser = async () => {
@@ -48,12 +50,11 @@ function TopBar(props) {
 
 
     const displayLogin = () => {
-        props.setShowLogin(true);
+        navigate('/login');
     };
 
     const Logout = () => {
         props.setIsLoggedIn(false);
-        props.setShowLogin(false);
         props.setAccessToken("");
     };
 
@@ -118,7 +119,6 @@ function TopBar(props) {
 TopBar.propTypes = {
     AccessToken: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    setShowLogin: PropTypes.func.isRequired,
     isSmall: PropTypes.bool.isRequired,
     setAccessToken: PropTypes.func.isRequired,
     setIsLoggedIn: PropTypes.func.isRequired,
