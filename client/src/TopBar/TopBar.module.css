@@ -72,7 +72,7 @@
 
 .points {
     background-color: var(--primary);
-    color: var(--secondary);
+    color: var(--text-dark);
     width: fit-content;
     padding: 5px;
     margin: 0 0 0 10%;
