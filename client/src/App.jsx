@@ -35,7 +35,7 @@ function App() {
         },
         {
             path: "/redeem",
-            element: <ClaimReward/>
+            element: <ClaimReward AccessToken={AccessToken} isLoggedIn={isLoggedIn}/>
         }
     ]);
 

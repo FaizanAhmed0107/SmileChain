@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import getAbout from "../API_Requests/GetAbout.jsx";
 import getPoints from "../API_Requests/getPoints.jsx";
 import {toast} from "react-toastify";
+import {FaCoins} from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 
 function TopBar(props) {
@@ -58,14 +59,6 @@ function TopBar(props) {
         props.setAccessToken("");
     };
 
-    const pointIcon = (
-        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"
-             strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" fill={"#ff2424"} stroke={"#474747"}></polyline>
-            <circle cx="12" cy="8" r="7" fill={"#ffd824"} stroke={"#474747"}></circle>
-        </svg>
-    )
-
     const login = (
         <div className={styles.loginCont}>
             <button className={styles.loginButton} onClick={displayLogin}>
@@ -82,18 +75,19 @@ function TopBar(props) {
     );
 
     const points = (
-            props.isLoggedIn ? <div className={styles.pointsBox}>
-                    <p className={styles.points}>Points: {props.point} {pointIcon}</p>
-                </div> :
-                <div/>
-        )
-    ;
+        props.isLoggedIn ? <div className={styles.pointsBox}>
+                <p className={styles.points} onClick={() => navigate('/redeem')}>
+                    Points: {props.point} <FaCoins/>
+                </p>
+            </div> :
+            <div/>
+    );
 
     return (
         <header className={styles.head}>
             {props.isSmall ?
                 <>
-                    <div className={styles.top}>
+                    <div>
                         <h1 className={styles.heading}>Smile Chain</h1>
                         <p className={styles.below}>Unlock happiness and earn rewards for your genuine smiles!</p>
                     </div>

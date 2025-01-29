@@ -78,6 +78,16 @@
     margin: 0 0 0 10%;
     border-radius: 4px;
     white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.points:hover {
+    transform: scale(1.05);
+}
+
+.points:active {
+    transform: scale(0.9);
 }
 
 @media (max-width: 870px) {

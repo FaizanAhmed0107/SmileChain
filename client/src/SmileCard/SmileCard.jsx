@@ -5,6 +5,7 @@ import styles from "./SmileCard.module.css";
 import socket from "../API_Requests/socket.js";
 import {IoMdThumbsUp} from "react-icons/io";
 import {FaStar} from "react-icons/fa";
+import {FaCoins} from "react-icons/fa";
 
 function SmileCard(props) {
     const [likes, setLikes] = useState(props.likes);
@@ -61,14 +62,6 @@ function SmileCard(props) {
         };
     }, [props.id]);
 
-    const pointIcon = (
-        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round"
-             strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" fill={"#ff2424"} stroke={"#ff2424"}></polyline>
-            <circle cx="12" cy="8" r="7" fill={"#ffd824"} stroke={"#ffd824"}></circle>
-        </svg>
-    )
-
     return (
         <div className={styles.container}>
             <img className={styles.image} src={props.image} alt="Captured Image"/>
@@ -84,7 +77,7 @@ function SmileCard(props) {
                 </button>
             </div>
             <p className={styles.winner}>$ Winner!</p>
-            <p className={styles.award}>🎉 {props.point}{pointIcon} awarded! 🎉</p>
+            <p className={styles.award}>🎉 {props.point}<FaCoins/> &nbsp; awarded! 🎉</p>
             <p className={styles.rating}>{props.rating}/5 <FaStar className={styles.star}/></p>
         </div>
     );

@@ -1,0 +1,107 @@
+.top {
+    background-color: var(--background-accent);
+    font-family: 'Poppins', sans-serif;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.points, .filter, .sort {
+    background-color: var(--primary);
+    color: var(--text-dark);
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    margin: 0 0 0 10%;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.filter, .sort {
+    position: relative;
+    margin: 0;
+    min-width: 100px;
+    text-align: center;
+}
+
+.head {
+    text-align: center;
+    color: var(--primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.end {
+    padding-right: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    gap: 10px;
+    align-content: center;
+}
+
+.filterDropdown, .sortDropdown {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    background-color: var(--accent);
+    color: var(--text-dark);
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    width: max-content;
+    min-width: 150px;
+    margin-top: 5px;
+}
+
+.sortDropdown {
+    transform: translateX(-61px);
+}
+
+.open {
+    display: block;
+}
+
+.sortMenuItem:hover, .sortFilterItem:hover {
+    background-color: var(--secondary);
+}
+
+.contain {
+    padding: 50px;
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.back {
+    background-color: var(--primary);
+    color: var(--text-dark);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+    margin: 10px 10px 10px 0;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.back:hover {
+    background-color: var(--accent);
+    transform: scale(1.05);
+    transform-origin: left;
+}
+
+.back:active {
+    transform: scale(0.9);
+    transform-origin: left;
+}

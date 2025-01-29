@@ -1,6 +1,7 @@
 :root {
     --text: hsl(202, 22%, 90%);
     --text-dark: hsl(202, 22%, 5%);
+    --text-grey: hsl(202, 22%, 30%);
     --background: hsl(207, 36%, 5%);
     --background-accent: hsl(207, 36%, 10%);
     --primary: hsl(201, 50%, 73%);
