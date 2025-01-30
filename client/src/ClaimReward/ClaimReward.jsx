@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import getPoints from "../API_Requests/getPoints.jsx";
 import PropTypes from "prop-types";
+import getRewards from "../API_Requests/getRewards.jsx";
 
 function ClaimReward(props) {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -28,26 +29,18 @@ function ClaimReward(props) {
     }
 
 
-    const [rewards, setRewards] = useState([
-        {point: 1500, type: "Ether", detail: "0.05 ETH"},
-        {point: 2000, type: "Other", detail: "₹500 Amazon Gift Card"},
-        {point: 3500, type: "Ether", detail: "0.15 ETH"},
-        {point: 2200, type: "Other", detail: "₹1000 Swiggy Gift Card"},
-        {point: 3200, type: "Ether", detail: "0.15 ETH"},
-        {point: 2020, type: "Other", detail: "50% discount Flipkart"},
-        {point: 3503, type: "Ether", detail: "0.15 ETH"},
-    ]);
+    const [rewards, setRewards] = useState([]);
 
     useEffect(() => {
         const sortedRewards = [...rewards].sort((a, b) => {
             if (activeSort === "Ascending") {
-                return a.point - b.point;
+                return a.points - b.points;
             } else {
-                return b.point - a.point;
+                return b.points - a.points;
             }
         });
         setRewards(sortedRewards);
-    }, [activeSort, rewards]);
+    }, [activeSort]);
 
     useEffect(() => {
         const getPoint = async () => {
@@ -66,8 +59,25 @@ function ClaimReward(props) {
             }
         }
 
+        const getReward = async () => {
+            try {
+                const result = await getRewards();
+                if (result.success) {
+                    setRewards(result.data.data);
+                } else {
+                    console.error(result.message);
+                }
+            } catch (error) {
+                toast.error("Error fetching Reward", {
+                    position: "top-right",
+                });
+                console.error("Error fetching Reward:", error);
+            }
+        }
+
         if (props.isLoggedIn) {
             getPoint();
+            getReward();
         }
     }, [props.AccessToken, props.isLoggedIn]);
 
@@ -75,9 +85,9 @@ function ClaimReward(props) {
         if (activeFilter === "Ethers")
             return reward.type === "Ether";
         else if (activeFilter === "Gift Cards")
-            return reward.type === "Other" && reward.detail.includes("Gift Card")
+            return reward.type === "Other" && reward.value.includes("Gift Card")
         else if (activeFilter === "Coupons")
-            return reward.type === "Other" && !reward.detail.includes("Gift Card")
+            return reward.type === "Other" && !reward.value.includes("Gift Card")
         return true;
     }
 
@@ -126,10 +136,12 @@ function ClaimReward(props) {
             </div>
             <div className={styles.contain}>
                 {
-                    rewards.filter(filterMethod).map((reward) => (
-                        <RewardCard key={reward.point} points={reward.point} type={reward.type}
-                                    details={reward.detail}/>
-                    ))
+                    rewards.length === 0 ?
+                        <p>No reward Found</p> :
+                        rewards.filter(filterMethod).map((reward) => (
+                            <RewardCard key={reward.points} points={reward.points} type={reward.type}
+                                        details={reward.value} AccessToken={props.AccessToken} setPoint={setPoint}/>
+                        ))
                 }
             </div>
             <button className={styles.back} onClick={() => navigate('/')}>

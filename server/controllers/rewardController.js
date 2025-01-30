@@ -123,16 +123,16 @@ const redeemPoint = asyncHandler(async (req, res) => {
             throw new Error('All fields are required');
         }
         if (user.points < points) {
-            res.status(403).json({message: "Not Enough Points", points: user.points});
             truffle_connect.getBalancePoints(user.account, (ans) => {
                 User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
                     .then(() => console.log("User points updated successfully"))
                     .catch((err) => console.error("Error updating points:", err));
             });
+            return res.status(403).json({success: false, message: "Not Enough Points", points: user.points});
         }
         const reward = await Reward.findOne({points});
         if (!reward) {
-            res.status(404).json({message: "No Such Reward"});
+            return res.status(404).json({success: false, message: "No Such Reward"});
         }
 
         if (reward.type === 'Ether') {
@@ -143,28 +143,21 @@ const redeemPoint = asyncHandler(async (req, res) => {
             //TODO
         }
 
-        try {
-            await truffle_connect.redeemPoints(user.account, points);
-            truffle_connect.getBalancePoints(user.account, (ans) => {
-                User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
-                    .then(() => console.log("User points updated successfully"))
-                    .catch((err) => console.error("Error updating points:", err));
-            });
-            res.status(201).json({message: "Redeemed Successfully", points});
-        } catch (err) {
-            truffle_connect.getOwner((accounts) => {
-                truffle_connect.getOneReward(accounts[0], points, async () => {
-                    await Reward.findOneAndDelete({points});
-                });
-            });
-            res.status(404).json({message: "Reward Synchronization Error"});
-        }
+        await truffle_connect.redeemPoints(user.account, points);
+        truffle_connect.getBalancePoints(user.account, (ans) => {
+            User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
+                .then(() => console.log("User points updated successfully"))
+                .catch((err) => console.error("Error updating points:", err));
+        });
+
+        return res.status(201).json({success: true, message: "Redeemed Successfully", points});
+
     } catch (error) {
-        console.log(error);
-        res.status(500);
-        throw new Error('Failed to Redeem Reward.');
+        console.error(error);
+        return res.status(500).json({success: false, message: "Failed to Redeem Reward."});
     }
 });
+
 
 // @desc get all rewards
 // @route GET /api/rewards/all

@@ -22,6 +22,17 @@
     margin: 0;
     min-width: 100px;
     text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter:hover, .sort:hover {
+    background-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.filter:active, .sort:active {
+    transform: scale(0.9);
 }
 
 .head {
