@@ -1,0 +1,146 @@
+.denied {
+    width: 100%;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background);
+    color: var(--primary);
+    font-size: 25px;
+    font-weight: bolder;
+    padding: 20% 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.home, .logout, .saveSetting {
+    background-color: var(--primary);
+    color: var(--text-dark);
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    min-width: 100px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.home:hover, .logout:hover, .saveSetting:hover {
+    background-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.home:active, .logout:active, .saveSetting:active {
+    transform: scale(0.9);
+}
+
+.top {
+    background-color: var(--background-accent);
+    font-family: 'Poppins', sans-serif;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.head {
+    text-align: center;
+    color: var(--primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.end {
+    padding-right: 10%;
+    align-items: center;
+    display: flex;
+    justify-content: right;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 50px;
+    margin-bottom: 50px;
+}
+
+.setting {
+    background-color: var(--background-accent);
+    color: var(--text);
+    border: none;
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.heading {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    width: 100%;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.name {
+    font-size: 14px;
+    margin: 0;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.input {
+    border: 1px solid var(--text-grey);
+    background: var(--background-secondary);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    transition: border-color 0.2s ease-in-out;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+}
+
+.saveSetting {
+    font-family: 'Poppins', sans-serif;
+    padding: 12px 20px;
+    width: 200px;
+    align-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.footer {
+    background-color: var(--background-secondary);
+    font-family: 'Montserrat', sans-serif;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    padding: 0 10px;
+    /*text-align: center;*/
+}

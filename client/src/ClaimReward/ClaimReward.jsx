@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import getPoints from "../API_Requests/getPoints.jsx";
 import PropTypes from "prop-types";
 import getRewards from "../API_Requests/getRewards.jsx";
+import getAbout from "../API_Requests/GetAbout.jsx";
 
 function ClaimReward(props) {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -43,6 +44,24 @@ function ClaimReward(props) {
     }, [activeSort]);
 
     useEffect(() => {
+        const getUser = async () => {
+            try {
+                const result = await getAbout(props.AccessToken);
+                if (result.success) {
+                    if (result.data.isAdmin) {
+                        navigate('/admin');
+                    }
+                } else {
+                    console.error(result.message);
+                }
+            } catch (error) {
+                toast.error("Error fetching user details", {
+                    position: "top-right",
+                });
+                console.error("Error fetching user details:", error);
+            }
+        };
+
         const getPoint = async () => {
             try {
                 const result = await getPoints(props.AccessToken);
@@ -76,6 +95,7 @@ function ClaimReward(props) {
         }
 
         if (props.isLoggedIn) {
+            getUser();
             getPoint();
             getReward();
         }
@@ -139,7 +159,7 @@ function ClaimReward(props) {
                     rewards.length === 0 ?
                         <p>No reward Found</p> :
                         rewards.filter(filterMethod).map((reward) => (
-                            <RewardCard key={reward.points} points={reward.points} type={reward.type}
+                            <RewardCard key={reward.points} points={reward.points} type={reward.points}
                                         details={reward.value} AccessToken={props.AccessToken} setPoint={setPoint}/>
                         ))
                 }

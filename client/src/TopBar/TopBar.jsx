@@ -16,6 +16,9 @@ function TopBar(props) {
             try {
                 const result = await getAbout(props.AccessToken);
                 if (result.success) {
+                    if (result.data.isAdmin) {
+                        navigate('/admin');
+                    }
                     setUser(result.data.username);
                 } else {
                     console.error(result.message);

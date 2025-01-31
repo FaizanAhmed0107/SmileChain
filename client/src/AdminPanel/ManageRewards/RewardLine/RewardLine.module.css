@@ -1,0 +1,39 @@
+.tableLine {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.tableLineItem {
+    color: var(--text);
+    padding: 5px;
+    margin: 0;
+}
+
+.icons {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.edit {
+    color: var(--accent);
+}
+
+.delete {
+    color: #bd4f4f;
+}
+
+.popup {
+    background-color: var(--background-secondary);
+    font-family: 'Montserrat', sans-serif;
+    position: fixed;
+    left: 45%;
+    bottom: 45%;
+    width: 100%;
+    color: white;
+    padding: 0 10px;
+    /*text-align: center;*/
+}

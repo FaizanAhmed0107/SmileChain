@@ -6,6 +6,7 @@ import DeviceDetector from "./DeviceDetector.jsx";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Front from "./Front/Front.jsx";
 import ClaimReward from "./ClaimReward/ClaimReward.jsx";
+import AdminPanel from "./AdminPanel/AdminPanel.jsx";
 
 function App() {
     // Initialize state with values from sessionStorage (if they exist)
@@ -36,6 +37,11 @@ function App() {
         {
             path: "/redeem",
             element: <ClaimReward AccessToken={AccessToken} isLoggedIn={isLoggedIn}/>
+        },
+        {
+            path: "/admin",
+            element: <AdminPanel AccessToken={AccessToken} isLoggedIn={isLoggedIn} setAccessToken={setAccessToken}
+                                 setIsLoggedIn={setIsLoggedIn}/>
         }
     ]);
 
