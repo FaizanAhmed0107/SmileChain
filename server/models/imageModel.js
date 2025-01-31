@@ -11,7 +11,7 @@ const imageSchema = new mongoose.Schema({
         required: [true, 'Please enter a image']
     },
     time: {
-        type: String,
+        type: Date,
         required: [true, 'Please enter a time']
     },
     likes: {

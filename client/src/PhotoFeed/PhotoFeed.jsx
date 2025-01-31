@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState, useCallback} from "react";
 import {toast} from "react-toastify";
 import PropTypes from "prop-types";
-import {BallTriangle} from 'react-loading-icons'
+import {BallTriangle} from 'react-loading-icons';
 import styles from "./PhotoFeed.module.css";
 import SmileCard from "../SmileCard/SmileCard.jsx";
 import getImages from "../API_Requests/getImages.jsx";
@@ -37,7 +37,9 @@ function PhotoFeed(props) {
             try {
                 const result = await getImages();
                 if (result.success) {
-                    setImages(result.data);
+                    // Sort images by time in descending order (latest to oldest)
+                    const sortedImages = result.data.sort((a, b) => new Date(b.time) - new Date(a.time));
+                    setImages(sortedImages);
                 } else {
                     console.error(result.message);
                 }
@@ -55,7 +57,10 @@ function PhotoFeed(props) {
 
     useEffect(() => {
         const handleNewImage = (newImage) => {
-            setImages((prevImages) => [...prevImages, newImage]);
+            setImages((prevImages) => {
+                const updatedImages = [newImage, ...prevImages];
+                return updatedImages.sort((a, b) => new Date(b.time) - new Date(a.time)); // Maintain sorted order
+            });
         };
 
         socket.on("new-image", handleNewImage);
@@ -86,7 +91,8 @@ function PhotoFeed(props) {
     return (
         <>
             {isLoading ?
-                <BallTriangle className={styles.loading} fill={"hsl(201, 50%, 73%)"} speed={.75} stroke={"hsl(201, 50%, 73%)"}/>
+                <BallTriangle className={styles.loading} fill={"hsl(201, 50%, 73%)"} speed={.75}
+                              stroke={"hsl(201, 50%, 73%)"}/>
                 : images.length > 0 ?
                     <div className={styles.box}>
                         <p className={styles.head}>Winning Smiles!</p>

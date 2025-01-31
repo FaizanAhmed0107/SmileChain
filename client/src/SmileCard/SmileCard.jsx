@@ -9,6 +9,12 @@ import {FaCoins} from "react-icons/fa";
 
 function SmileCard(props) {
     const [likes, setLikes] = useState(props.likes);
+    const date = new Date(props.time);
+    const hours = (date.getHours() % 12 === 0) ? 12 : date.getHours() % 12;
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const secs = date.getSeconds().toString().padStart(2, "0");
+    const apm = (date.getHours() >= 12) ? 'PM' : 'AM';
+    const time = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ', ' + hours + ':' + minutes + ':' + secs + ' ' + apm;
 
     const likePic = () => {
         if (props.isLoggedIn) {
@@ -66,7 +72,7 @@ function SmileCard(props) {
         <div className={styles.container}>
             <img className={styles.image} src={props.image} alt="Captured Image"/>
             <div className={styles.line}>
-                <p className={styles.time}>{props.time}</p>
+                <p className={styles.time}>{time}</p>
                 <button
                     className={`${styles.likes} ${
                         props.isLoggedIn && props.likedImg.includes(props.id) ? styles.liked : ""
