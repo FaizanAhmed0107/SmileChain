@@ -159,6 +159,25 @@ const redeemPoint = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc get all admin values
+// @route GET /api/rewards/admin/
+// @access private
+const getValues = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
+        const admin = await Admin.findOne({anchor: "anchor"});
+        res.status(200).json({message: "Value Modified", data: admin});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Modify Value.');
+    }
+});
+
 // @desc Modify delay between Pics
 // @route POST /api/rewards/admin/delay
 // @access private
@@ -188,7 +207,7 @@ const setDelay = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc Modify delay between Pics
+// @desc Modify Points to add per Pic
 // @route POST /api/rewards/admin/points
 // @access private
 const setPoint = asyncHandler(async (req, res) => {
@@ -233,4 +252,4 @@ const getRewards = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = {addReward, deleteReward, getPoints, redeemPoint, setDelay, setPoint, getRewards}
+module.exports = {addReward, deleteReward, getPoints, redeemPoint, getValues, setDelay, setPoint, getRewards}

@@ -8,6 +8,7 @@ const {
     deleteReward,
     getPoints,
     redeemPoint,
+    getValues,
     setDelay,
     setPoint,
     getRewards
@@ -15,6 +16,7 @@ const {
 
 router.post('/add', validateToken, onlyAdmin, addReward);
 router.post('/del', validateToken, onlyAdmin, deleteReward);
+router.get('/admin', validateToken, onlyAdmin, getValues);
 router.post('/admin/delay', validateToken, onlyAdmin, setDelay);
 router.post('/admin/points', validateToken, onlyAdmin, setPoint);
 router.get("/", validateToken, getPoints);
