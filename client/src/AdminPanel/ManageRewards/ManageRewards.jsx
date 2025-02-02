@@ -20,7 +20,7 @@ function ManageRewards(props) {
             {
                 props.rewards.map((reward, index) => (
                     <RewardLine key={index} details={reward.value} id={index} points={reward.points}
-                                type={reward.type}/>
+                                type={reward.type} AccessToken={props.AccessToken} getReward={props.getReward}/>
                 ))
             }
         </div>
@@ -28,7 +28,9 @@ function ManageRewards(props) {
 }
 
 ManageRewards.propTypes = {
-    rewards: PropTypes.array.isRequired
+    rewards: PropTypes.array.isRequired,
+    AccessToken: PropTypes.string.isRequired,
+    getReward: PropTypes.func.isRequired
 }
 
 export default ManageRewards

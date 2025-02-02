@@ -9,20 +9,14 @@ import ManageRewards from "./ManageRewards/ManageRewards.jsx";
 import setPointsPerPic from "../API_Requests/setPPP.jsx";
 import setDelayValue from "../API_Requests/setDelayValue.jsx";
 import getAdminValues from "../API_Requests/getAdminValues.jsx";
+import getRewards from "../API_Requests/getRewards.jsx";
 
 function AdminPanel(props) {
     const [userAdmin, setUserAdmin] = useState(false);
     const [pointsToAdd, setPointsToAdd] = useState(0);
     const [delay, setDelay] = useState(0);
+    const [rewards, setRewards] = useState([]);
     const navigate = useNavigate();
-
-    const rewards = [
-        {points: 1500, type: 'Ether', value: 0.05},
-        {points: 2000, type: 'Ether', value: 0.10},
-        {points: 3500, type: 'Other', value: '₹500 Amazon Gift Card'},
-        {points: 4000, type: 'Ether', value: 0.15},
-        {points: 4500, type: 'Other', value: '50% Flipkart Discount'},
-    ];
 
     const home = () => {
         navigate('/');
@@ -33,6 +27,22 @@ function AdminPanel(props) {
         props.setAccessToken("");
         navigate('/');
     };
+
+    const getReward = async () => {
+        try {
+            const result = await getRewards();
+            if (result.success) {
+                setRewards(result.data.data);
+            } else {
+                console.error(result.message);
+            }
+        } catch (error) {
+            toast.error("Error fetching Reward", {
+                position: "top-right",
+            });
+            console.error("Error fetching Reward:", error);
+        }
+    }
 
     useEffect(() => {
         const getUser = async () => {
@@ -71,6 +81,7 @@ function AdminPanel(props) {
         if (props.isLoggedIn) {
             getUser();
             getValues();
+            getReward();
         }
     }, [props.AccessToken, props.isLoggedIn]);
 
@@ -111,22 +122,23 @@ function AdminPanel(props) {
                     <div className={styles.setting}>
                         <p className={styles.heading}>Settings</p>
                         <div className={styles.options}>
+
                             <div className={styles.option}>
                                 <p className={styles.name}>Points to add</p>
                                 <input type={"number"} className={styles.input} value={pointsToAdd ?? 0}
-                                       onChange={(e) => setPointsToAdd(e.target.value)}/>
+                                       onChange={(e) => setPointsToAdd(Number(e.target.value))}/>
                             </div>
                             <div className={styles.option}>
                                 <p className={styles.name}>Delay between rewards (in hrs)</p>
                                 <input type={"number"} className={styles.input} step="0.01" value={delay ?? 0}
-                                       onChange={(e) => setDelay(e.target.value)}/>
+                                       onChange={(e) => setDelay(Number(e.target.value))}/>
                             </div>
                         </div>
                         <button className={styles.saveSetting} onClick={setAdminVal}>
                             <FaSave style={{fontSize: "20px"}}/> Save Settings
                         </button>
                     </div>
-                    <ManageRewards rewards={rewards}/>
+                    <ManageRewards rewards={rewards} AccessToken={props.AccessToken} getReward={getReward}/>
                 </div>
                 <div className={styles.footer}>
                     <p className={styles.rewardCount}>Total Rewards: {rewards.length}</p>
@@ -138,7 +150,6 @@ function AdminPanel(props) {
                 <button className={styles.home} onClick={home}>Home</button>
             </div>
     );
-
 }
 
 AdminPanel.propTypes = {
