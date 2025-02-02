@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Reward = require("../models/rewardModel");
 const User = require("../models/userModel");
+const Admin = require("../models/AdminModel");
 const truffle_connect = require('../truffle/Contract');
 
 // @desc Add/Modify a Reward
@@ -158,6 +159,64 @@ const redeemPoint = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc Modify delay between Pics
+// @route POST /api/rewards/admin/delay
+// @access private
+const setDelay = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
+        const {postDelay} = req.body;
+        if (!postDelay) {
+            console.log(postDelay);
+            res.status(400);
+            throw new Error('All fields are required');
+        }
+        const admin = await Admin.findOneAndUpdate(
+            {anchor: "anchor"},
+            {$set: {postDelay}},
+            {new: true} // return updated document
+        );
+        res.status(200).json({message: "Value Modified", data: admin});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Modify Value.');
+    }
+});
+
+// @desc Modify delay between Pics
+// @route POST /api/rewards/admin/points
+// @access private
+const setPoint = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error("User not found");
+        }
+        const {pointsToAdd} = req.body;
+        if (!pointsToAdd) {
+            console.log(pointsToAdd);
+            res.status(400);
+            throw new Error('All fields are required');
+        }
+        const admin = await Admin.findOneAndUpdate(
+            {anchor: "anchor"},
+            {$set: {pointsToAdd}},
+            {new: true} // return updated document
+        );
+        res.status(200).json({message: "Value Modified", data: admin});
+    } catch (error) {
+        console.log(error);
+        res.status(500);
+        throw new Error('Failed to Modify Value.');
+    }
+});
+
 
 // @desc get all rewards
 // @route GET /api/rewards/all
@@ -174,4 +233,4 @@ const getRewards = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = {addReward, deleteReward, getPoints, redeemPoint, getRewards}
+module.exports = {addReward, deleteReward, getPoints, redeemPoint, setDelay, setPoint, getRewards}
