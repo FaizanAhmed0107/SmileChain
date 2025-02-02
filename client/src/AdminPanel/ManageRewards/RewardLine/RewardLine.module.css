@@ -78,7 +78,7 @@
 
 .confirmButton {
     background-color: #bd4f4f;
-    color:  var(--text);
+    color: var(--text);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -87,7 +87,7 @@
 
 .cancelButton {
     background-color: var(--accent);
-    color:  var(--text);
+    color: var(--text);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -100,4 +100,25 @@
 
 .cancelButton:hover {
     background-color: var(--secondary);
+}
+
+.inputPoints, .inputType, .inputDetails {
+    border: 1px solid var(--text-grey);
+    background: var(--background-secondary);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 5px;
+    margin: 0;
+    font-size: 14px;
+    transition: border-color 0.2s ease-in-out;
+    box-sizing: border-box;
+    max-width: 100px;
+}
+
+.inputType {
+    outline: none;
+}
+
+.inputDetails {
+    max-width: 300px;
 }

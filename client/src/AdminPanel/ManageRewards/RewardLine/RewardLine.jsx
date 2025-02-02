@@ -1,11 +1,13 @@
 import styles from './RewardLine.module.css';
 import PropTypes from "prop-types";
 import {FaEdit} from "react-icons/fa";
+import {FaSave} from "react-icons/fa";
 import {MdDelete} from "react-icons/md";
 import {useState} from "react";
 
 function RewardLine(props) {
     const [showPopup, setShowPopup] = useState(false);
+    const [canEdit, setCanEdit] = useState(false);
 
     const handleDeleteClick = () => {
         setShowPopup(true);
@@ -23,18 +25,38 @@ function RewardLine(props) {
         document.body.style.overflow = "auto"; // Re-enable scrolling
     };
 
+    const disp = (
+        <div className={styles.tableLine}>
+            <p className={styles.tableLineItem}>{props.id + 1}</p>
+            <p className={styles.tableLineItem}>{props.points}</p>
+            <p className={styles.tableLineItem}>{props.type}</p>
+            <p className={styles.tableLineItem}>{props.details}</p>
+            <div className={styles.icons}>
+                <FaEdit className={styles.edit} onClick={() => setCanEdit(true)}/>
+                <MdDelete className={styles.delete} onClick={handleDeleteClick}/>
+            </div>
+        </div>
+    );
+
+    const edit = (
+        <div className={styles.tableLine}>
+            <p className={styles.tableLineItem}>{props.id + 1}</p>
+            <input type={"number"} className={styles.inputPoints}/>
+            <select className={styles.inputType}>
+                <option value="Ether">Ether</option>
+                <option value="Other">Other</option>
+            </select>
+            <input type={"string"} className={styles.inputDetails}/>
+            <div className={styles.icons}>
+                <FaSave className={styles.edit} onClick={() => setCanEdit(false)}/>
+                <MdDelete className={styles.delete} onClick={handleDeleteClick}/>
+            </div>
+        </div>
+    );
+
     return (
         <>
-            <div className={styles.tableLine}>
-                <p className={styles.tableLineItem}>{props.id + 1}</p>
-                <p className={styles.tableLineItem}>{props.points}</p>
-                <p className={styles.tableLineItem}>{props.type}</p>
-                <p className={styles.tableLineItem}>{props.details}</p>
-                <div className={styles.icons}>
-                    <FaEdit className={styles.edit}/>
-                    <MdDelete className={styles.delete} onClick={handleDeleteClick}/>
-                </div>
-            </div>
+            {canEdit ? edit : disp}
 
             {showPopup && (
                 <div className={styles.overlay}>
@@ -58,9 +80,12 @@ function RewardLine(props) {
 
 RewardLine.propTypes = {
     id: PropTypes.number.isRequired,
-    points: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    details: PropTypes.string.isRequired
+    points:
+    PropTypes.number.isRequired,
+    type:
+    PropTypes.string.isRequired,
+    details:
+    PropTypes.string.isRequired
 };
 
 export default RewardLine;

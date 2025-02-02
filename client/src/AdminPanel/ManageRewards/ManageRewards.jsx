@@ -20,7 +20,7 @@ function ManageRewards(props) {
             {
                 props.rewards.map((reward, index) => (
                     <RewardLine key={index} details={reward.value} id={index} points={reward.points}
-                                type={reward.points}/>
+                                type={reward.type}/>
                 ))
             }
         </div>

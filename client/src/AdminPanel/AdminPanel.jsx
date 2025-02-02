@@ -6,9 +6,14 @@ import PropTypes from "prop-types";
 import {FaSave} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import ManageRewards from "./ManageRewards/ManageRewards.jsx";
+import setPointsPerPic from "../API_Requests/setPPP.jsx";
+import setDelayValue from "../API_Requests/setDelayValue.jsx";
+import getAdminValues from "../API_Requests/getAdminValues.jsx";
 
 function AdminPanel(props) {
     const [userAdmin, setUserAdmin] = useState(false);
+    const [pointsToAdd, setPointsToAdd] = useState(0);
+    const [delay, setDelay] = useState(0);
     const navigate = useNavigate();
 
     const rewards = [
@@ -46,10 +51,51 @@ function AdminPanel(props) {
             }
         };
 
+        const getValues = async () => {
+            try {
+                const result = await getAdminValues(props.AccessToken);
+                if (result.success) {
+                    setPointsToAdd(result.data.data.pointsToAdd);
+                    setDelay(result.data.data.postDelay);
+                } else {
+                    console.error(result.message);
+                }
+            } catch (error) {
+                toast.error("Error fetching user details", {
+                    position: "top-right",
+                });
+                console.error("Error fetching user details:", error);
+            }
+        };
+
         if (props.isLoggedIn) {
             getUser();
+            getValues();
         }
     }, [props.AccessToken, props.isLoggedIn]);
+
+    const setAdminVal = async () => {
+        try {
+            const result1 = await setDelayValue(props.AccessToken, delay);
+            if (result1.success) {
+                const result2 = await setPointsPerPic(props.AccessToken, pointsToAdd);
+                if (result2.success) {
+                    toast.success("Values Updated Successfully.",
+                        {position: "top-right"}
+                    );
+                } else {
+                    console.error(result2.message);
+                }
+            } else {
+                console.error(result1.message);
+            }
+        } catch (error) {
+            toast.error("Error fetching user details",
+                {position: "top-right"}
+            );
+            console.error("Error fetching user details:", error);
+        }
+    }
 
     return (
         userAdmin ?
@@ -67,15 +113,17 @@ function AdminPanel(props) {
                         <div className={styles.options}>
                             <div className={styles.option}>
                                 <p className={styles.name}>Points to add</p>
-                                <input type={"number"} className={styles.input}></input>
+                                <input type={"number"} className={styles.input} value={pointsToAdd ?? 0}
+                                       onChange={(e) => setPointsToAdd(e.target.value)}/>
                             </div>
                             <div className={styles.option}>
                                 <p className={styles.name}>Delay between rewards (in hrs)</p>
-                                <input type={"number"} className={styles.input}></input>
+                                <input type={"number"} className={styles.input} step="0.01" value={delay ?? 0}
+                                       onChange={(e) => setDelay(e.target.value)}/>
                             </div>
                         </div>
-                        <button
-                            className={styles.saveSetting}><FaSave style={{fontSize: "20px"}}/> Save Settings
+                        <button className={styles.saveSetting} onClick={setAdminVal}>
+                            <FaSave style={{fontSize: "20px"}}/> Save Settings
                         </button>
                     </div>
                     <ManageRewards rewards={rewards}/>
