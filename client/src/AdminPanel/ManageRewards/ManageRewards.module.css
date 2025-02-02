@@ -64,3 +64,73 @@
     padding: 5px;
     margin: 0;
 }
+
+.tableLine {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.tableLineItem {
+    color: var(--text);
+    padding: 5px;
+    margin: 0;
+}
+
+.icons {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.inputPoints, .inputType, .inputDetails {
+    border: 1px solid var(--text-grey);
+    background: var(--background-secondary);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 5px;
+    margin: 0;
+    font-size: 14px;
+    transition: border-color 0.2s ease-in-out;
+    box-sizing: border-box;
+    max-width: 100px;
+}
+
+.inputType {
+    outline: none;
+}
+
+.inputDetails {
+    max-width: 300px;
+}
+
+.edit {
+    color: var(--accent);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.edit:hover {
+    color: var(--secondary);
+    transform: scale(1.05);
+}
+
+.edit:active {
+    transform: scale(0.9);
+}
+
+.delete {
+    color: #bd4f4f;
+    cursor: pointer;
+}
+
+.delete:hover {
+    color: #a43e3e;
+    transform: scale(1.05);
+}
+
+.delete:active {
+    transform: scale(0.9);
+}

@@ -13,7 +13,7 @@ import getAbout from "../API_Requests/GetAbout.jsx";
 function ClaimReward(props) {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isSortOpen, setIsSortOpen] = useState(false);
-    const [activeSort, setActiveSort] = useState("Ascending");
+    const [activeSort, setActiveSort] = useState("None");
     const [activeFilter, setActiveFilter] = useState("None");
     const [point, setPoint] = useState(0);
     const sortOptions = ["Ascending", "Descending"];
@@ -159,7 +159,7 @@ function ClaimReward(props) {
                     rewards.length === 0 ?
                         <p>No reward Found</p> :
                         rewards.filter(filterMethod).map((reward) => (
-                            <RewardCard key={reward.points} points={reward.points} type={reward.points}
+                            <RewardCard key={reward.points} points={reward.points} type={reward.type}
                                         details={reward.value} AccessToken={props.AccessToken} setPoint={setPoint}/>
                         ))
                 }
