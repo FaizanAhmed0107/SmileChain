@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import HandleLogin from "../API_Requests/HandleLogin.jsx";
 import {toast} from "react-toastify";
 import HandleSignup from "../API_Requests/HandleSignup.jsx";
+import {useNavigate} from 'react-router-dom';
 
 function MobileLogin(props) {
     const [isPassVisible, setIsPassVisible] = useState(false);
@@ -15,6 +16,7 @@ function MobileLogin(props) {
     const [password, setPassword] = useState("");
     const [confPassword, setConfPassword] = useState("");
     const [account, setAccount] = useState("");
+    const navigate = useNavigate();
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,7 +40,7 @@ function MobileLogin(props) {
             toast.success("Login successful!");
             props.setAccessToken(response.accessToken);
             props.setIsLoggedIn(true);
-            props.setShowLogin(false);
+            navigate('/');
         } else {
             toast.error(response.message || "Login failed!");
         }
@@ -59,7 +61,7 @@ function MobileLogin(props) {
                 toast.success("Account created successfully! Logging in...");
                 props.setAccessToken(response.accessToken);
                 props.setIsLoggedIn(true);
-                props.setShowLogin(false);
+                navigate('/');
             } else {
                 toast.error(response.message || "Signup failed!");
             }
@@ -137,7 +139,6 @@ MobileLogin.propTypes = {
     signUp: PropTypes.bool.isRequired,
     setIsLoggedIn: PropTypes.func.isRequired,
     setAccessToken: PropTypes.func.isRequired,
-    setShowLogin: PropTypes.func.isRequired,
     toggleSignUp: PropTypes.func.isRequired
 };
 

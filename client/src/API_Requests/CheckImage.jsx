@@ -2,10 +2,7 @@ import serverAddress from "./serverAddress.js";
 
 const CheckImage = async (img, stars, accessToken) => {
     try {
-        const date = new Date();
-        const today = (date.getHours() % 12 === 0) ? 12 : date.getHours() % 12;
-        const apm = (date.getHours() >= 12) ? 'PM' : 'AM';
-        const time = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ', ' + today + ':' + date.getMinutes() + ':' + date.getSeconds() + ' ' + apm;
+        const time = new Date();
         const response = await fetch(serverAddress + '/api/image', {
             method: 'POST',
             headers: {

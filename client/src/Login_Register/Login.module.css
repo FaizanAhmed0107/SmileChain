@@ -33,8 +33,9 @@
 }
 
 .userInput {
-    background-color: #eee;
-    border: none;
+    background-color: var(--background-accent);
+    color: var(--text);
+    border: 1px solid var(--primary);
     margin: 8px 0;
     padding: 10px 15px;
     font-size: 13px;
@@ -44,8 +45,8 @@
 }
 
 .passBox {
-    background-color: #eee;
-    border: none;
+    background-color: var(--background-accent);
+    border: 1px solid var(--primary);
     margin: 8px 0;
     padding: 10px 15px;
     font-size: 13px;
@@ -59,19 +60,19 @@
 .passField {
     width: 100%;
     font-size: 13px;
-    background-color: #eee;
+    background-color: var(--background-accent);
+    color: var(--text);
     border: none;
     outline: none;
 }
 
 .visibleIcon {
-    color: #818181;
+    color: var(--accent);
     cursor: pointer;
 }
 
 .subutton, .lgbutton {
-    background-color: #34a0a4;
-    color: #fff;
+    color: var(--text-dark);
     font-size: 12px;
     padding: 10px 45px;
     border: 1px solid transparent;
@@ -84,9 +85,9 @@
 }
 
 .lgbutton {
-    background-color: #76c893;
+    background-color: var(--secondary);
 }
 
 .subutton {
-    background-color: #34a0a4;
+    background-color: var(--accent);
 }

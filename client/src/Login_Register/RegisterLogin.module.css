@@ -5,15 +5,13 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #e2e2e2, #c9ffe9);
+    background: var(--linearBackground90);
     font-family: 'Montserrat', sans-serif;
 }
 
 .fullCard, .halfCard {
-    background-color: white;
+    background-color: var(--background-accent);
     border-radius: 30px;
-    border: 1px solid #ddd;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     transition: all 0.5s ease-in-out;
 }
 

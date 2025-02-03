@@ -3,9 +3,18 @@ import PropTypes from "prop-types";
 import {toast} from "react-toastify";
 import styles from "./SmileCard.module.css";
 import socket from "../API_Requests/socket.js";
+import {IoMdThumbsUp} from "react-icons/io";
+import {FaStar} from "react-icons/fa";
+import {FaCoins} from "react-icons/fa";
 
 function SmileCard(props) {
     const [likes, setLikes] = useState(props.likes);
+    const date = new Date(props.time);
+    const hours = (date.getHours() % 12 === 0) ? 12 : date.getHours() % 12;
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const secs = date.getSeconds().toString().padStart(2, "0");
+    const apm = (date.getHours() >= 12) ? 'PM' : 'AM';
+    const time = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ', ' + hours + ':' + minutes + ':' + secs + ' ' + apm;
 
     const likePic = () => {
         if (props.isLoggedIn) {
@@ -59,29 +68,23 @@ function SmileCard(props) {
         };
     }, [props.id]);
 
-    const etherIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" height={15} fill={'#957b27'}>
-            <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/>
-        </svg>
-    )
-
     return (
         <div className={styles.container}>
             <img className={styles.image} src={props.image} alt="Captured Image"/>
             <div className={styles.line}>
-                <p className={styles.time}>{props.time}</p>
+                <p className={styles.time}>{time}</p>
                 <button
                     className={`${styles.likes} ${
                         props.isLoggedIn && props.likedImg.includes(props.id) ? styles.liked : ""
                     }`}
                     onClick={likePic}
                 >
-                    👍{likes}
+                    <IoMdThumbsUp/>{likes}
                 </button>
             </div>
             <p className={styles.winner}>$ Winner!</p>
-            <p className={styles.award}>🎉 0.01 {etherIcon} &nbsp; awarded! 🎉</p>
-            <p className={styles.rating}>{props.rating}/5⭐</p>
+            <p className={styles.award}>🎉 {props.point}<FaCoins/> &nbsp; awarded! 🎉</p>
+            <p className={styles.rating}>{props.rating}/5 <FaStar className={styles.star}/></p>
         </div>
     );
 }
@@ -96,6 +99,7 @@ SmileCard.propTypes = {
     likedImg: PropTypes.arrayOf(PropTypes.string).isRequired,
     updateLikedImg: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
+    point: PropTypes.number.isRequired
 };
 
 export default SmileCard;

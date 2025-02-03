@@ -1,7 +1,8 @@
 const asyncHandler = require('express-async-handler');
-const truffle_connect = require('../truffle/Contract');
 const Image = require('../models/imageModel');
 const User = require('../models/userModel');
+const Admin = require('../models/AdminModel')
+const truffle_connect = require("../truffle/Contract");
 
 const checkImage = asyncHandler(async (req, res) => {
     try {
@@ -13,26 +14,51 @@ const checkImage = asyncHandler(async (req, res) => {
 
         const {image, time, stars} = req.body;
         if (!image || !time) {
-            console.log(image, time, stars)
+            console.log(image, time, stars);
             res.status(400);
-            throw new Error('All fields are required');
+            throw new Error("All fields are required");
         }
-        const imgResponse = await Image.create({owner: req.user.id, image, time, likes: 0, stars});
+        const adminValue = await Admin.findOne({anchor: "anchor"});
+        if (!adminValue || !adminValue.pointsToAdd) {
+            throw new Error("Admin configuration missing or incomplete");
+        }
 
-        truffle_connect.getOwner(function (accounts) {
-            truffle_connect.sendEther(accounts[0], user.account, () => {
-                console.log('Etherium transferred');
-            })
-        })
+        if (Date.now() - new Date(user.lastPost).getTime() < adminValue.postDelay * 60 * 60 * 1000) {
+            res.status(403).json({
+                title: "Forbidden",
+                message: `Cant post now wait for ${adminValue.postDelay} hours since last Post.`
+            });
+            return;
+        }
 
-        const io = req.app.get('io');
-        io.emit('new-image', imgResponse);
+        const imgResponse = await Image.create({
+            owner: req.user.id, image, time, stars, points: adminValue.pointsToAdd
+        });
+        User.findByIdAndUpdate(req.user.id, {lastPost: Date.now()})
+            .then(() => console.log("User points updated successfully"))
+            .catch((err) => console.error("Error updating points:", err));
+
+
+        await truffle_connect.getOwner((accounts) => {
+            truffle_connect.addUserPoints(accounts[0], user.account, adminValue.pointsToAdd);
+        });
+
+        setTimeout(async () => {
+            await truffle_connect.getBalancePoints(user.account, (ans) => {
+                User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
+                    .then(() => console.log("User points updated successfully"))
+                    .catch((err) => console.error("Error updating points:", err));
+            });
+        }, 5000);
+
+        const io = req.app.get("io");
+        io.emit("new-image", imgResponse);
 
         res.status(201).json({message: "Image processed successfully", data: image.length});
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500);
-        throw new Error('Failed to process the image');
+        throw new Error("Failed to process the image");
     }
 });
 

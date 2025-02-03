@@ -77,6 +77,7 @@ const currentUser = asyncHandler(async (req, res) => {
             username: req.user.username,
             email: req.user.email,
             likedImages: user.likedImages,
+            isAdmin: user.isAdmin
         });
     } catch (error) {
         res.status(500);

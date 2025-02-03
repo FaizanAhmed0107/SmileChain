@@ -1,9 +1,9 @@
 .side {
     width: 100%;
-    background: linear-gradient(90deg, #76c893, #34a0a4);
+    background: var(--linearSecondaryAccent90);
     background-size: 200% 100%;
     border-radius: 150px 30px 30px 100px;
-    color: white;
+    color: var(--text-dark);
     transition: all 0.5s ease-in-out;
     z-index: 1;
 }
@@ -14,7 +14,7 @@
     background-position: 100% 0;
 }
 
-.container{
+.container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -38,10 +38,10 @@
 
 .button {
     background-color: transparent;
-    color: #fff;
+    color: var(--text-dark);
     font-size: 12px;
     padding: 10px 45px;
-    border: 1px solid white;
+    border: 1px solid var(--text-dark);
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;

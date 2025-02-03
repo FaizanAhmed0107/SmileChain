@@ -1,47 +1,57 @@
 # SmileChain 😄⛓️
 
 **SmileChain** is a MERN + Web3-based decentralized application that rewards users for their smiles. Leveraging AI and
-blockchain technology, SmileChain creates a unique and fun way to interact with Ethereum transactions while promoting
-positivity.
+blockchain technology, SmileChain provides a unique and engaging experience by turning smiles into valuable rewards, all
+while promoting positivity.
 
 ---
 
 ## 🛠️ Features
 
-- **AI-Powered Smile Detection**: Utilizes the [FaceAPI](https://github.com/justadudewhohacks/face-api.js) model to
-  detect smiles.
-- **Decentralized Rewards System**: Implements Ethereum smart contracts (via Solidity) to award 0.01 Ether for smiles
-  with a score above 60%.
-- **Robust User Authentication**: Ensures secure tracking of users with login and session management.
-- **Interactive Gallery**: Displays all rewarded pictures in a gallery where logged-in users can view and like images,
-  promoting engagement.
-- **Seamless Frontend**: Built with React for an intuitive user interface.
-- **Robust Backend**: Node.js and Express handle the application logic.
-- **Efficient Storage**: MongoDB is used to store user data, transaction logs, and gallery interactions.
+- **AI-Powered Smile Detection**: Detects smiles using the [FaceAPI](https://github.com/justadudewhohacks/face-api.js)
+  model.
+- **Reward Point System**: Users earn reward points for smiles with a score greater than **0.60**, which can be
+  accumulated for future redemptions.
+- **Reward Exchange Options**: Redeem points for Ether, gift cards, or exclusive coupons.
+- **Admin Panel**: Manage reward settings, transaction delays, and reward exchange options.
+- **Secure User Authentication**: Ensures secure tracking of users with login and session management.
+- **Interactive Gallery**: Displays rewarded smile pictures in a gallery where users can engage by viewing and liking
+  them.
+- **Efficient Data Storage**: MongoDB securely stores user information, transaction logs, and gallery interactions.
 - **Blockchain Integration**: Interacts with the Ethereum network using Truffle and Ganache for testing.
 
 ---
 
 ## 📸 How It Works
 
-1. **Smile Detection**:
-    - The app uses your webcam to analyze your smile using the FaceAPI model.
-    - A "smiling score" is calculated in real-time.
+### **Smile Detection**
 
-2. **Blockchain Interaction**:
-    - If the smiling score exceeds **60%**, a request is sent to the Ethereum blockchain.
-    - A Solidity smart contract verifies the transaction and awards **0.01 Ether** to your account.
+- The app uses your webcam to detect smiles in real-time with the FaceAPI model.
+- A "smiling score" is calculated, measuring the intensity and quality of the smile.
 
-3. **Gallery of Awarded Pictures**:
-    - Successfully rewarded smiles are saved and displayed in a public gallery.
-    - Logged-in users can browse the gallery, like their favorite smiles, and interact with others.
+### **Reward Point System**
 
-4. **Transaction Logging**:
-    - User data and transaction details are securely stored in a MongoDB database for tracking.
+- Smiles with a score greater than **0.60** earn reward points for the user.
+- Points are stored in the user's account for future redemptions.
 
-5. **User Authentication**:
-    - Robust user authentication ensures secure access to the platform.
-    - Each user has a unique account to maintain accurate records of smiles, rewards, and interactions.
+### **Reward Exchange Options**
+
+- Accumulated reward points can be redeemed for:
+    - **Ether:** Exchange points via smart contracts.
+    - **Gift Cards:** Use points to access exclusive deals and discounts.
+    - **Coupons:** Redeem points for special offers.
+
+### **Admin Panel for Reward Management**
+
+- The admin panel provides the following controls:
+    - Configure the reward points granted per successful smile.
+    - Set a cooldown period between consecutive reward point claims.
+    - Manage reward exchange options by adding, deleting, or modifying available rewards.
+
+### **Interactive Gallery**
+
+- Successfully rewarded smiles are saved and displayed in a public gallery.
+- Logged-in users can browse, like their favorite smiles, and engage with others.
 
 ---
 
@@ -50,13 +60,13 @@ positivity.
 ### **Frontend**
 
 - **React**: For building a dynamic user interface.
-- **FaceAPI.js**: For AI-based face and smile detection.
+- **FaceAPI.js**: For AI-based smile detection.
 
 ### **Backend**
 
 - **Node.js**: Backend runtime environment.
 - **Express.js**: Server-side framework for API endpoints.
-- **MongoDB**: Database for storing user data, logs, and gallery interactions.
+- **MongoDB**: Database for storing user data and interactions.
 
 ### **Blockchain**
 
@@ -70,7 +80,7 @@ positivity.
 
 ### **Prerequisites**
 
-- **Node.js** (v14 or higher)
+- **Node.js** (v18.20.5)
 - **MongoDB** (local or cloud instance)
 - **Truffle** and **Ganache**
 - **Metamask** (browser wallet)
@@ -93,17 +103,28 @@ positivity.
 
 ---
 
-## 🛡️ Smart Contract
+# 🛡️ Smart Contract
 
 The Ethereum smart contract handles:
 
-- Transferring Ether (0.01) to the user's wallet.
-
-Deployed on the **Ganache test network** for development.
+- **Transparent Reward Distribution:** Ensure that reward points are awarded fairly and accurately based on user
+  interactions.
+- **Secure Point Exchange Management:** Safeguard the process of exchanging reward points for Ether, gift cards, or
+  coupons.
+- **Comprehensive Transaction History:** Maintain a detailed and transparent record of all reward and transaction
+  activities for audit and user reference.
+- **Scalable Smart Contract Design:** Enable easy updates and scalability for future reward mechanisms or additional
+  features.
+- **Automated Reward Redemption:** Handle the seamless processing of reward redemptions based on smart contract logic.
+- **Anti-Fraud Measures:** Implement safeguards to prevent fraudulent claims and unauthorized transactions.
+- **User Notifications:** Provide real-time notifications for successful smile detections, point awards, and reward
+  redemptions.
+- **Flexible Reward Policy Configuration:** Allow dynamic changes to reward criteria and redemption options through the
+  admin panel.
 
 ---
 
-## 🤝 Contributing
+# 🤝 Contributing
 
 Contributions are welcome! To contribute:
 
