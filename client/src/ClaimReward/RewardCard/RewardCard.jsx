@@ -7,10 +7,20 @@ import getPoints from "../../API_Requests/getPoints.jsx";
 
 function RewardCard(props) {
 
+    const addHistory = (hist) => (
+        props.setHistory(prevHistory => [hist, ...prevHistory])
+    );
+
     const redeem = async () => {
         try {
             const result = await redeemReward(props.AccessToken, props.points);
             if (result.success) {
+                addHistory({
+                    points: props.points,
+                    type: props.type,
+                    value: props.details,
+                    createdAt: Date.now()
+                })
                 toast.success(result.data.message, {
                     position: "top-right",
                 });
@@ -62,7 +72,8 @@ RewardCard.propTypes = {
     type: PropTypes.string.isRequired,
     details: PropTypes.string.isRequired,
     AccessToken: PropTypes.string.isRequired,
-    setPoint: PropTypes.func.isRequired
+    setPoint: PropTypes.func.isRequired,
+    setHistory: PropTypes.func.isRequired
 }
 
 export default RewardCard;

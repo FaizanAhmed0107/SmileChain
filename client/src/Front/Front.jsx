@@ -19,7 +19,7 @@ function Front(props) {
                 setPoint={setPoint}
             />
             <WebCamCont isLoggedIn={props.isLoggedIn} AccessToken={props.AccessToken} setPoint={setPoint}
-                        threshold={0.6}/>
+                        threshold={0}/>
             <PhotoFeed isLoggedIn={props.isLoggedIn} AccessToken={props.AccessToken}/>
         </>
     )
