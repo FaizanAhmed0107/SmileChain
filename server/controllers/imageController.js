@@ -48,6 +48,12 @@ const checkImage = asyncHandler(async (req, res) => {
                 User.findByIdAndUpdate(req.user.id, {points: parseInt(ans)})
                     .then(() => console.log("User points updated successfully"))
                     .catch((err) => console.error("Error updating points:", err));
+
+                if (parseInt(ans) > user.highestPoint) {
+                    User.findByIdAndUpdate(req.user.id, {highestPoint: parseInt(ans)})
+                        .then(() => console.log("User Max-points updated successfully"))
+                        .catch((err) => console.error("Error Max-updating points:", err));
+                }
             });
         }, 5000);
 

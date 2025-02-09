@@ -6,20 +6,50 @@
     grid-template-columns: 1fr 2fr 1fr;
 }
 
+.left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.back {
+    background-color: var(--primary);
+    color: var(--text-dark);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+    margin: 10px 10px 10px 0;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    min-width: 35px;
+    text-align: start;
+    transition: all 0.3s;
+}
+
+.back:hover {
+    background-color: var(--accent);
+    transform: scale(1.05);
+    transform-origin: left;
+}
+
+.back:active {
+    transform: scale(0.9);
+    transform-origin: left;
+}
+
 .points, .filter, .sort {
     background-color: var(--primary);
     color: var(--text-dark);
     width: fit-content;
     height: fit-content;
     padding: 5px;
-    margin: 0 0 0 10%;
+    margin: 0;
     border-radius: 4px;
     white-space: nowrap;
 }
 
 .filter, .sort {
     position: relative;
-    margin: 0;
     min-width: 100px;
     text-align: center;
     cursor: pointer;
@@ -78,6 +108,20 @@
     background-color: var(--secondary);
 }
 
+.body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.sideBar {
+    min-height: calc(100vh - 101px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 50px 10px;
+}
+
 .contain {
     padding: 50px;
     display: flex;
@@ -86,33 +130,76 @@
     justify-content: space-evenly;
 }
 
-.back {
-    background-color: var(--primary);
-    color: var(--text-dark);
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 16px;
-    padding: 5px;
-    margin: 10px 10px 10px 0;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    white-space: nowrap;
-    min-width: 100px;
-    text-align: center;
+.highest {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    padding: 24px;
     display: flex;
-    flex-direction: row;
-    gap: 2px;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: var(--background-secondary);
+    box-sizing: border-box;
+    border: 1px solid var(--primary);
     transition: all 0.3s;
 }
 
-.back:hover {
-    background-color: var(--accent);
-    transform: scale(1.05);
-    transform-origin: left;
+.highText {
+    color: var(--text);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 24px;
+    margin: 0 0 10px 0;
 }
 
-.back:active {
-    transform: scale(0.9);
-    transform-origin: left;
+.hp {
+    color: var(--primary);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    margin: 0;
+}
+
+.hist {
+    box-sizing: border-box;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: var(--text-grey);
+
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0 12px 0;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.histTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+.histLeft {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.histRight {
+    font-family: 'Ubuntu', sans-serif;
+    text-align: right;
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--primary);
+    margin: 0;
+}
+
+.histBottom {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    margin: 0;
+    color: var(--text-grey);
 }

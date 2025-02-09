@@ -39,6 +39,7 @@ app.use(express.json());
 app.use('/api/image', require('./routes/imageRoute'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/rewards', require('./routes/rewardRoute'));
+app.use('/api/history', require('./routes/HistoryRoutes'));
 app.use(errorHandler);
 
 io.on('connection', (socket) => {

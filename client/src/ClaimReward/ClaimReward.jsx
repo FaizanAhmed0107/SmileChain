@@ -9,6 +9,7 @@ import getPoints from "../API_Requests/getPoints.jsx";
 import PropTypes from "prop-types";
 import getRewards from "../API_Requests/getRewards.jsx";
 import getAbout from "../API_Requests/GetAbout.jsx";
+import getHistory from "../API_Requests/getHistory.jsx";
 
 function ClaimReward(props) {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -16,6 +17,8 @@ function ClaimReward(props) {
     const [activeSort, setActiveSort] = useState("None");
     const [activeFilter, setActiveFilter] = useState("None");
     const [point, setPoint] = useState(0);
+    const [user, setUser] = useState({});
+    const [history, setHistory] = useState([]);
     const sortOptions = ["Ascending", "Descending"];
     const filterOptions = ["All", "Ethers", "Gift Cards", "Coupons"];
     const navigate = useNavigate();
@@ -48,6 +51,7 @@ function ClaimReward(props) {
             try {
                 const result = await getAbout(props.AccessToken);
                 if (result.success) {
+                    setUser(result.data);
                     if (result.data.isAdmin) {
                         navigate('/admin');
                     }
@@ -94,12 +98,48 @@ function ClaimReward(props) {
             }
         }
 
+        const getHist = async () => {
+            try {
+                const result = await getHistory(props.AccessToken);
+                if (result.success) {
+                    setHistory(result.data);
+                } else {
+                    console.error(result.message);
+                }
+            } catch (error) {
+                toast.error("Error fetching Reward History", {
+                    position: "top-right",
+                });
+                console.error("Error fetching Reward History:", error);
+            }
+        }
+
         if (props.isLoggedIn) {
             getUser();
             getPoint();
             getReward();
+            getHist();
         }
-    }, [props.AccessToken, props.isLoggedIn]);
+    }, [navigate, props.AccessToken, props.isLoggedIn]);
+
+    const getTime = (time) => {
+        const months = {
+            0: "January",
+            1: "February",
+            2: "March",
+            3: "April",
+            4: "May",
+            5: "June",
+            6: "July",
+            7: "August",
+            8: "September",
+            9: "October",
+            10: "November",
+            11: "December"
+        };
+        const date = new Date(time);
+        return months[date.getMonth()] + " " + date.getDate() + ', ' + date.getFullYear();
+    }
 
     const filterMethod = (reward) => {
         if (activeFilter === "Ethers")
@@ -124,7 +164,10 @@ function ClaimReward(props) {
     return (
         <div>
             <div className={styles.top}>
-                <div style={{alignContent: "center"}}>
+                <div className={styles.left}>
+                    <button className={styles.back} onClick={() => navigate('/')}>
+                        <MdKeyboardBackspace style={{fontSize: "20px"}}/>
+                    </button>
                     <p className={styles.points}>Points: {point} <FaCoins/></p>
                 </div>
                 <p className={styles.head}>Redeem Rewards</p>
@@ -154,19 +197,42 @@ function ClaimReward(props) {
                     </div>
                 </div>
             </div>
-            <div className={styles.contain}>
-                {
-                    rewards.length === 0 ?
-                        <p>No reward Found</p> :
-                        rewards.filter(filterMethod).map((reward) => (
-                            <RewardCard key={reward.points} points={reward.points} type={reward.type}
-                                        details={reward.value} AccessToken={props.AccessToken} setPoint={setPoint}/>
-                        ))
-                }
+            <div className={styles.body}>
+                <div className={styles.sideBar}>
+                    <div className={styles.highest}>
+                        <p className={styles.highText}>Highest Achieved</p>
+                        <p className={styles.hp}>{user.highestPoint} Points <FaCoins/></p>
+                    </div>
+
+                    <div className={styles.highest}>
+                        <p className={styles.highText}>Transaction History</p>
+                        {
+                            history.map((hist, index) => (
+                                <div key={index} className={styles.hist}>
+                                    <div className={styles.histTop}>
+                                        <p className={styles.histLeft}>Redeemed {hist.points} Point{hist.points > 1 ? 's' : ""}</p>
+                                        <p className={styles.histRight}>{hist.value} {hist.type === 'Ether' ? "ETH" : ""}</p>
+                                    </div>
+                                    <p className={styles.histBottom}>{getTime(hist.createdAt)}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div>
+                    <div className={styles.contain}>
+                        {
+                            rewards.length === 0 ?
+                                <p>No reward Found</p> :
+                                rewards.filter(filterMethod).map((reward) => (
+                                    <RewardCard key={reward.points} points={reward.points} type={reward.type}
+                                                details={reward.value} AccessToken={props.AccessToken}
+                                                setPoint={setPoint} setHistory={setHistory}/>
+                                ))
+                        }
+                    </div>
+                </div>
             </div>
-            <button className={styles.back} onClick={() => navigate('/')}>
-                <MdKeyboardBackspace style={{fontSize: "20px"}}/> Back
-            </button>
         </div>
     )
 }

@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Reward = require("../models/rewardModel");
 const User = require("../models/userModel");
 const Admin = require("../models/AdminModel");
+const History = require("../models/historyModel");
 const truffle_connect = require('../truffle/Contract');
 
 // @desc Add/Modify a Reward
@@ -150,6 +151,9 @@ const redeemPoint = asyncHandler(async (req, res) => {
                 .then(() => console.log("User points updated successfully"))
                 .catch((err) => console.error("Error updating points:", err));
         });
+
+        historyResponse = await History.create({owner: req.user.id, points, type: reward.type, value: reward.value});
+        console.log(historyResponse);
 
         return res.status(201).json({success: true, message: "Redeemed Successfully", points});
 
