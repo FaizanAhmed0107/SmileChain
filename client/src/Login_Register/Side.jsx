@@ -7,8 +7,8 @@ function Side(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const login = (
         <div className={styles.container}>
-            <h1 className={styles.heading}>Hello, Friend!</h1>
-            <p className={styles.text}>Register with your personal details to use all of site features</p>
+            <h1 className={styles.heading}>Welcome Back!</h1>
+            <p className={styles.text}>Enter with your personal details to use all of site features</p>
             <button className={styles.button} onClick={props.toggleSignUp}>Sign up</button>
         </div>
     );
@@ -16,8 +16,8 @@ function Side(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const signup = (
         <div className={styles.container}>
-            <h1 className={styles.heading}>Welcome Back!</h1>
-            <p className={styles.text}>Enter your personal details to use all of site features</p>
+            <h1 className={styles.heading}>Hello, Friend!</h1>
+            <p className={styles.text}>Register your personal details to use all of site features</p>
             <button className={styles.button} onClick={props.toggleSignUp}>Log in</button>
         </div>
     );
