@@ -89,7 +89,7 @@ while promoting positivity.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/mrunknown101331/SmileChain.git
+   git clone https://github.com/faizanahmed0107/SmileChain.git
    cd SmileChain
 
 2. **Install dependencies**:
